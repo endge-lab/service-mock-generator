@@ -1,0 +1,32 @@
+app:
+  env: production
+  name: service_template
+  version: 0.1.0
+  public_url: https://api.example.com
+http:
+  port: "8080"
+  cors_allowed_origins: https://example.com
+logger:
+  level: info
+postgres:
+  host: localhost
+  port: 5432
+  user: postgres
+  database: service_template
+  schema: public
+  sslmode: disable
+  migrations_enabled: false
+auth:
+  enabled: false
+  jwks_path: /.well-known/jwks.json
+  jwks_cache_ttl: 5m
+  timeout: 5s
+telemetry:
+  enabled: false
+  otlp_insecure: false
+redpanda:
+  enabled: false
+  client_id: service_template
+  dial_timeout: 5s
+  read_batch_timeout: 2s
+  write_timeout: 10s

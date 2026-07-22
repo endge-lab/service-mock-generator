@@ -1,0 +1,26 @@
+services:
+  service-template-go:
+    container_name: service-template-go
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ${APP_RUNTIME_ENV_FILE:-.env.development}
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+    restart: unless-stopped
+    networks:
+      edge:
+        aliases:
+          - service-template-go.internal
+      observability:
+        aliases:
+          - service-template-go.observability
+
+networks:
+  edge:
+    external: true
+    name: ${EDGE_NETWORK:-service-edge}
+  observability:
+    external: true
+    name: ${OBSERVABILITY_NETWORK:-service-observability}

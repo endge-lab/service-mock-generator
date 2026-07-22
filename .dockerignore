@@ -1,0 +1,7 @@
+.git
+.gitignore
+tmp
+.idea
+.DS_Store
+.env.runtime
+.env.runtime.ci

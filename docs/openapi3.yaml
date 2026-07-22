@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: Endge Service Template API
+  version: 1.0.20
+  description: |
+    Minimal Endge microservice template with health, version, middleware,
+    auth/telemetry wiring and no business endpoints.
+servers:
+  - url: /
+tags:
+  - name: health
+    description: Technical service endpoints.
+paths:
+  /health:
+    get:
+      tags: [health]
+      operationId: getHealth
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /version:
+    get:
+      tags: [health]
+      operationId: getVersion
+      summary: Service version
+      responses:
+        "200":
+          description: Current service version
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VersionResponse"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status, service, version, env]
+      properties:
+        status:
+          type: string
+          example: ok
+        service:
+          type: string
+          example: service_template
+        version:
+          type: string
+          example: 0.1.0
+        env:
+          type: string
+          example: development
+    VersionResponse:
+      type: object
+      required: [service, version, env]
+      properties:
+        service:
+          type: string
+          example: service_template
+        version:
+          type: string
+          example: 0.1.0
+        env:
+          type: string
+          example: development
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: common.not_found
+        message:
+          type: string
+          example: Сущность не найдена
+        details:
+          type: object
+          additionalProperties: true
