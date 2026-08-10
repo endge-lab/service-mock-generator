@@ -77,10 +77,10 @@ WebSocket задача не меняет meaning JSON Schema и generation profi
 
 ```text
 REST:
-request → generate N items → response → завершение
+request - generate N items - response - завершение
 
 WebSocket:
-connect → start → batch → batch → control commands → ... → stop/close
+connect - start - batch - batch - control commands - ... - stop/close
 ```
 
 ## 5. Границы задачи
@@ -202,18 +202,18 @@ closed
 Переходы:
 
 ```text
-connect              → idle
-idle + start         → configuring → running
-running + pause      → paused
-paused + resume      → running
-running + replace    → configuring → running
-paused + replace     → configuring → paused
-running + stop       → idle
-paused + stop        → idle
-error + replace      → configuring → running
-error + stop         → idle
-any + socket close   → closed
-fatal error          → closed
+connect              - idle
+idle + start         - configuring - running
+running + pause      - paused
+paused + resume      - running
+running + replace    - configuring - running
+paused + replace     - configuring - paused
+running + stop       - idle
+paused + stop        - idle
+error + replace      - configuring - running
+error + stop         - idle
+any + socket close   - closed
+fatal error          - closed
 ```
 
 Недопустимая команда для текущего state возвращает `stream.invalid_state`, не изменяя state.
