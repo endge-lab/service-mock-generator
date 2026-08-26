@@ -2,6 +2,10 @@
 
 Краткий changelog для `service-template-go`.
 
+## 0.1.1
+
+- Обновлена зависимость `github.com/endge-lab/service-kit-go` до `v0.4.0`.
+
 ## 0.1.0
 
 - Подготовлен публичный Go module `github.com/endge-lab/service-template-go`.

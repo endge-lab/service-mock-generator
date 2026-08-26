@@ -1,7 +1,7 @@
 app:
   env: development
   name: service_template
-  version: 0.1.0
+  version: 0.1.1
   public_url: http://localhost:8080
 http:
   port: "8080"

@@ -54,7 +54,7 @@ components:
           example: service_template
         version:
           type: string
-          example: 0.1.0
+          example: 0.1.1
         env:
           type: string
           example: development
@@ -67,7 +67,7 @@ components:
           example: service_template
         version:
           type: string
-          example: 0.1.0
+          example: 0.1.1
         env:
           type: string
           example: development
