@@ -1,0 +1,25 @@
+fuzz: elapsed: 0s, gathering baseline coverage: 0/169 completed
+fuzz: elapsed: 0s, gathering baseline coverage: 169/169 completed, now fuzzing with 2 workers
+fuzz: elapsed: 3s, execs: 79520 (26503/sec), new interesting: 5 (total: 174)
+fuzz: elapsed: 6s, execs: 171797 (30763/sec), new interesting: 5 (total: 174)
+fuzz: elapsed: 9s, execs: 260634 (29607/sec), new interesting: 7 (total: 176)
+fuzz: elapsed: 12s, execs: 353632 (31004/sec), new interesting: 9 (total: 178)
+fuzz: elapsed: 15s, execs: 449270 (31881/sec), new interesting: 12 (total: 181)
+fuzz: elapsed: 18s, execs: 546404 (32375/sec), new interesting: 13 (total: 182)
+fuzz: elapsed: 21s, execs: 649769 (34457/sec), new interesting: 14 (total: 183)
+fuzz: elapsed: 24s, execs: 752682 (34300/sec), new interesting: 14 (total: 183)
+fuzz: elapsed: 27s, execs: 859983 (35766/sec), new interesting: 14 (total: 183)
+fuzz: elapsed: 30s, execs: 961660 (33895/sec), new interesting: 15 (total: 184)
+fuzz: elapsed: 33s, execs: 1070075 (36140/sec), new interesting: 15 (total: 184)
+fuzz: elapsed: 36s, execs: 1174630 (34842/sec), new interesting: 15 (total: 184)
+fuzz: elapsed: 39s, execs: 1282210 (35861/sec), new interesting: 15 (total: 184)
+fuzz: elapsed: 42s, execs: 1388063 (35287/sec), new interesting: 15 (total: 184)
+fuzz: elapsed: 45s, execs: 1493366 (35106/sec), new interesting: 15 (total: 184)
+fuzz: elapsed: 48s, execs: 1595326 (33985/sec), new interesting: 16 (total: 185)
+fuzz: elapsed: 51s, execs: 1693633 (32751/sec), new interesting: 16 (total: 185)
+fuzz: elapsed: 54s, execs: 1765511 (23971/sec), new interesting: 16 (total: 185)
+fuzz: elapsed: 57s, execs: 1836237 (23577/sec), new interesting: 17 (total: 186)
+fuzz: elapsed: 1m0s, execs: 1930908 (31560/sec), new interesting: 17 (total: 186)
+fuzz: elapsed: 1m0s, execs: 1930908 (0/sec), new interesting: 17 (total: 186)
+PASS
+ok  	github.com/endge-lab/service-mock-generator/internal/usecase/stream	61.342s

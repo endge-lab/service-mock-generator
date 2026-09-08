@@ -1,0 +1,62 @@
+[
+  {
+    "attempt": "mock-adversarial-accepted.json",
+    "elapsedSeconds": 250.14,
+    "errors": [
+      "KeyboardInterrupt()"
+    ],
+    "lastCompletedCheck": [
+      "backend restart drops old sessions"
+    ]
+  },
+  {
+    "attempt": "mock-adversarial-complete.json",
+    "elapsedSeconds": 199.94,
+    "errors": [
+      "KeyboardInterrupt()"
+    ],
+    "lastCompletedCheck": [
+      "backend restart drops old sessions"
+    ]
+  },
+  {
+    "attempt": "mock-adversarial-final.json",
+    "elapsedSeconds": 780.79,
+    "errors": [
+      "OSError(49, \"Can't assign requested address\")"
+    ],
+    "lastCompletedCheck": [
+      "backend restart drops old sessions"
+    ]
+  },
+  {
+    "attempt": "mock-adversarial-releasecheck.json",
+    "elapsedSeconds": 21.55,
+    "errors": [
+      "OSError(49, \"Can't assign requested address\")"
+    ],
+    "lastCompletedCheck": [
+      "backend restart drops old sessions"
+    ]
+  },
+  {
+    "attempt": "mock-adversarial-report.json",
+    "elapsedSeconds": 1087.22,
+    "errors": [
+      "AssertionError(('backend', 'goroutine growth', {'bufferedBytes': 0, 'goroutines': 8, 'heap': 718304, 'sessions': 0, 'rssKiB': 17440}, {'bufferedBytes': 0, 'goroutines': 21, 'heap': 2354040, 'sessions': 0, 'rssKiB': 28144}))"
+    ],
+    "lastCompletedCheck": [
+      "900 seconds mixed load; 31112 cycles"
+    ]
+  },
+  {
+    "attempt": "mock-adversarial-verified.json",
+    "elapsedSeconds": 574.42,
+    "errors": [
+      "OSError(49, \"Can't assign requested address\")"
+    ],
+    "lastCompletedCheck": [
+      "backend restart drops old sessions"
+    ]
+  }
+]

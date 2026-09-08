@@ -1,6 +1,6 @@
 package main
 
-import "github.com/endge-lab/service-template-go/internal/bootstrap"
+import "github.com/endge-lab/service-mock-generator/internal/bootstrap"
 
 // @title Endge Service Template API
 // @version 1.0.20

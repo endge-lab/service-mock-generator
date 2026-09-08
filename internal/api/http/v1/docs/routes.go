@@ -1,7 +1,7 @@
 package docs
 
 import (
-	contractdocs "github.com/endge-lab/service-template-go/docs"
+	contractdocs "github.com/endge-lab/service-mock-generator/docs"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -1,0 +1,26 @@
+syntax = "proto3";
+package mockdata.v1;
+option go_package = "github.com/endge-lab/service-mock-generator/api/mockdata/v1;mockdatav1";
+
+// Only authenticated service callers may set trusted owner context.
+message Owner { string actor_id = 1; string workspace_id = 2; }
+message Empty {}
+message ServiceInfo { string service = 1; string version = 2; string env = 3; }
+// JSON bytes preserve arbitrary JSON roots and exact numeric literals.
+message JSONResponse { bytes json = 1; }
+message GenerateRequest { Owner owner = 1; bytes json = 2; }
+message CreateStreamRequest { Owner owner = 1; bytes json = 2; }
+message StreamReference { Owner owner = 1; string id = 2; }
+message UpdateStreamRequest { StreamReference stream = 1; bytes patch_json = 2; }
+message StreamEvent { bytes json = 1; }
+service MockDataService {
+ rpc GetServiceInfo(Empty) returns (ServiceInfo);
+ rpc GetCapabilities(Empty) returns (JSONResponse);
+ rpc Generate(GenerateRequest) returns (JSONResponse);
+ rpc CreateStream(CreateStreamRequest) returns (JSONResponse);
+ rpc GetStream(StreamReference) returns (JSONResponse);
+ rpc SubscribeStream(StreamReference) returns (stream StreamEvent);
+ rpc UpdateStream(UpdateStreamRequest) returns (JSONResponse);
+ rpc KeepAliveStream(StreamReference) returns (JSONResponse);
+ rpc StopStream(StreamReference) returns (Empty);
+}

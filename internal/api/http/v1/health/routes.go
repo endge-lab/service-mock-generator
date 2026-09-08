@@ -1,7 +1,7 @@
 package http
 
 import (
-	transport "github.com/endge-lab/service-template-go/internal/api/http/v1/transport"
+	transport "github.com/endge-lab/service-mock-generator/internal/api/http/v1/transport"
 
 	"github.com/gofiber/fiber/v2"
 )

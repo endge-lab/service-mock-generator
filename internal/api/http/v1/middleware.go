@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	servicefiber "github.com/endge-lab/service-kit-go/pkg/httpkit/fiber"
-	"github.com/endge-lab/service-template-go/internal/config"
+	"github.com/endge-lab/service-mock-generator/internal/config"
 
 	otelfiber "github.com/gofiber/contrib/otelfiber/v2"
 	"github.com/gofiber/fiber/v2"

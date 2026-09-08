@@ -1,7 +1,3 @@
-# E2E Tests
+# Mock Generator verification
 
-Здесь хранятся end-to-end сценарии сервиса:
-
-- auth middleware
-- request flow через transport и application layer конкретного сервиса
-- happy path и важные отказоустойчивые кейсы
+See [verification strategy](../../docs/tests/README.md). The generator has no persistence/migration suite; network cases use local test doubles or the isolated harness.

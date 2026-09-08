@@ -1,17 +1,5 @@
 package bootstrap
 
-import (
-	"github.com/endge-lab/service-template-go/internal/auth"
-	"github.com/endge-lab/service-template-go/internal/middleware"
+import "go.uber.org/fx"
 
-	"go.uber.org/fx"
-)
-
-func HandlerModules() fx.Option {
-	return fx.Options(
-		fx.Provide(
-			auth.NewResolver,
-			fx.Annotate(middleware.NewAuthMiddleware, fx.As(new(middleware.AuthMiddleware))),
-		),
-	)
-}
+func HandlerModules() fx.Option { return fx.Options() }

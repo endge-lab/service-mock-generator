@@ -1,10 +1,9 @@
 openapi: 3.0.3
 info:
-  title: Endge Service Template API
-  version: 1.0.20
+  title: Mock Generator Technical API
+  version: 0.1.0
   description: |
-    Minimal Endge microservice template with health, version, middleware,
-    auth/telemetry wiring and no business endpoints.
+    Technical endpoints only. Business operations use authenticated mockdata.v1 gRPC via backend.
 servers:
   - url: /
 tags:
@@ -51,10 +50,10 @@ components:
           example: ok
         service:
           type: string
-          example: service_template
+          example: service_mock_generator
         version:
           type: string
-          example: 0.1.1
+          example: 0.1.0
         env:
           type: string
           example: development
@@ -64,10 +63,10 @@ components:
       properties:
         service:
           type: string
-          example: service_template
+          example: service_mock_generator
         version:
           type: string
-          example: 0.1.1
+          example: 0.1.0
         env:
           type: string
           example: development

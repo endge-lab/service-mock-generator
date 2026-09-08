@@ -1,20 +1,10 @@
 # CHANGELOG
 
-Краткий changelog для `service-template-go`.
-
-## 0.1.1
-
-- Обновлена зависимость `github.com/endge-lab/service-kit-go` до `v0.4.0`.
-
 ## 0.1.0
 
-- Подготовлен публичный Go module `github.com/endge-lab/service-template-go`.
-- Шаблон переведен на зависимость `github.com/endge-lab/service-kit-go v0.1.0`.
-- Удален `package.json`: версия шаблона задается git tag-ами и `CHANGELOG.md`.
-- Добавлена инструкция на русском по публикации, локальному `go.work` и подключению kit из локальной папки.
-- Auth сделан опциональным через `AUTH_ENABLED=false` по умолчанию.
-- Telemetry сделана опциональной через `TELEMETRY_ENABLED=false` по умолчанию.
-- Redpanda/Kafka оставлены optional и выключены по умолчанию.
-- Реальные `.env.*` заменены на безопасные `.env.*.example`.
-- CI заменен на GitHub Actions.
-- Dockerfile и docker-compose очищены от приватных module credentials.
+- Самостоятельный stateless Mock Generator: deterministic Draft 2020-12 subset, relations и единый generator для unary/batches.
+- OIDC gRPC `mockdata.v1`, per-owner sessions, prepared/active leases, quotas, deadlines и bounded backpressure.
+- Технические HTTP endpoints, версия из VERSION, Air/Compose без БД и broker.
+- Golden, unit/network/race/fuzz tests и изолированный adversarial harness.
+
+Template infrastructure was adapted from `service-template-go`; template releases are not service versions.

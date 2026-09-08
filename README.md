@@ -1,149 +1,40 @@
-# Endge Service Template Go
+# Endge Mock Generator
 
-`service-template-go` - эталонный минимальный Go microservice template для Endge-сервисов.
+`github.com/endge-lab/service-mock-generator`, version `0.1.0`: bounded, deterministic JSON Schema Draft 2020-12 generation and in-memory stream sessions. No database, Redis or broker is required.
 
-Шаблон содержит только инфраструктурный скелет:
+Clients use the authenticated backend `/api/v1/mock-data` HTTP/SSE API. Only backend connects to the canonical `mockdata.v1` gRPC API. The generator's HTTP port exposes `/health`, `/version`, `/swagger` and `/swagger/openapi3.yaml` only.
 
-- HTTP на Fiber;
-- DI через `fx`;
-- config через `service-kit-go`;
-- logger;
-- OpenTelemetry middleware/providers;
-- optional JWT/JWKS auth middleware;
-- optional Redpanda/Kafka client;
-- `/health` и `/version`;
-- Swagger/Scalar в non-production окружениях;
-- единый JSON-формат ошибок;
-- architecture tests для защиты базовой структуры.
+## Local development
 
-В шаблоне намеренно нет бизнес-usecase, repository layer и бизнес-миграций. Новый сервис должен добавлять их самостоятельно под свою предметную область.
-
-## Как использовать
-
-1. Скопируйте репозиторий или создайте новый сервис на его основе.
-2. Замените module path в `go.mod`:
-
-   ```go
-   module github.com/your-org/your-service
-   ```
-
-3. Замените импорты `github.com/endge-lab/service-template-go/internal/...` на module path нового сервиса.
-4. Скопируйте env-файл:
-
-   ```bash
-   cp .env.development.example .env.development
-   ```
-
-5. Настройте `APP_NAME`, `PUBLIC_URL`, `CORS_ALLOWED_ORIGINS` и `POSTGRES_*`, если сервису нужна БД.
-6. Запустите тесты:
-
-   ```bash
-   go test ./...
-   ```
-
-7. Запустите сервис:
-
-   ```bash
-   make run
-   ```
-
-## API
-
-Технические endpoints:
-
-```text
-GET /health
-GET /version
-GET /swagger
-GET /swagger/openapi3.yaml
-```
-
-Бизнесовые endpoints нового сервиса должны добавляться под:
-
-```text
-/api/v1
-```
-
-## Config
-
-`service-kit-go` загружает `.env.*`, затем читает YAML-конфиг из `configs/<APP_ENV>.yaml`.
-
-В шаблоне есть безопасные дефолты:
-
-```text
-configs/development.yaml
-configs/production.yaml
-```
-
-Env-переменные должны переопределять значения YAML.
-
-## Auth
-
-Auth опционален. По умолчанию:
-
-```env
-AUTH_ENABLED=false
-```
-
-Чтобы включить JWT/JWKS auth:
-
-```env
-AUTH_ENABLED=true
-AUTH_SERVICE_URL=https://auth.example.com
-AUTH_ISSUER=https://auth.example.com
-AUTH_ALLOWED_AUDIENCES=your-audience
-```
-
-## Redpanda/Kafka
-
-Redpanda опциональна. По умолчанию:
-
-```env
-REDPANDA_ENABLED=false
-```
-
-Включайте ее только в event-driven сервисах:
-
-```env
-REDPANDA_ENABLED=true
-REDPANDA_BROKERS=redpanda:9092
-REDPANDA_CLIENT_ID=your-service
-```
-
-## Telemetry
-
-Telemetry опциональна. По умолчанию:
-
-```env
-TELEMETRY_ENABLED=false
-OTEL_EXPORTER_OTLP_ENDPOINT=
-```
-
-Если нужен OpenTelemetry export:
-
-```env
-TELEMETRY_ENABLED=true
-OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4317
-OTEL_EXPORTER_OTLP_INSECURE=true
-```
-
-## Добавление бизнес-логики
-
-Рекомендуемый порядок:
-
-1. Добавить domain entities/valueobjects/errors.
-2. Добавить usecase ports в application layer.
-3. Добавить repository implementation в infrastructure layer.
-4. Добавить HTTP transport в `internal/api/http/v1`.
-5. Зарегистрировать зависимости в `internal/bootstrap`.
-6. Добавить миграции только для реальных бизнес-таблиц сервиса.
-
-Usecase слой не должен импортировать postgres или HTTP packages.
-
-## Проверки
+From the monorepo root:
 
 ```bash
-go test ./...
-docker compose --env-file .env.development config
-GOWORK=off go test ./...
+./infra/dev.sh up mock
+./infra/dev.sh status mock
+./infra/dev.sh logs mock
+./infra/dev.sh down mock
 ```
+
+The general `./infra/dev.sh up` includes Mock. Compose uses `service-mock-generator:50052` and internal HTTP 8082 without published Mock ports. `up mock` starts Keycloak and idempotently adds the backend service-client audience mapper; it does not create a database or replace the realm/volume/users. Backend remains usable without Mock.
+
+For a process outside Compose, copy `.env.development.example` to `.env.development`, use the local Keycloak issuer/JWKS configuration, then `make run`. `make build`, Air and Docker embed `VERSION`. Production requires service identity and TLS; only explicit `MOCK_ALLOW_INSECURE_DEVELOPMENT=true` permits disabled verification in development.
+
+The stateless configuration uses a prepared `service-kit-go` change (`postgres.enabled: false`, planned `0.5.0`). Local `go.work` uses that source. `GOWORK=off go build ./...` checks compilation against the currently published dependency; independent startup/container delivery must follow publication of the kit change and updating `go.mod`. No tag or package is published by this change.
+
+## Contracts
+
+- [Generation rules, schema subset and relations](docs/todo-1.md)
+- [gRPC, HTTP/SSE, ownership, lease and examples](docs/todo-2.md)
+- [Implementation map](docs/architecture.md)
+- [Tests, fuzzing and adversarial harness](docs/tests/README.md)
+- Canonical source: `api/proto/mockdata/v1/mockdata.proto`; generated server: `api/mockdata/v1`; backend client: `internal/adapter/mockpb` in the backend repository.
+
+`make proto` regenerates both copies from the canonical source; `make contract-check` verifies the generated copies and contract hash. `protoc`, `protoc-gen-go` and `protoc-gen-go-grpc` must be on PATH.
+
+## Limits and operations
+
+`GetCapabilities` publishes effective limits. Numeric settings use `MOCK_REQUEST_BYTES`, `RESULT_BYTES`, `SCHEMA_NODES`, `DEPTH`, `DEFINITIONS`, `ARRAY_LENGTH`, `STRING_LENGTH`, `RELATIONS`, `MAPPINGS`, `ATTEMPTS`, `COUNT`, `ITEMS_PER_MESSAGE`, `MIN_INTERVAL_MS`, `MAX_INTERVAL_MS`, `SESSIONS`, `SESSIONS_PER_OWNER`, `JOBS`, `BUFFER_BYTES` (each prefixed with `MOCK_`). Durations: `MOCK_GENERATION_TIMEOUT`, `MOCK_IDLE_TIMEOUT`, `MOCK_READY_TIMEOUT`, `MOCK_WRITE_TIMEOUT`, in Go duration syntax.
+
+Defaults: 2 MiB input, 20 MiB output, 4 concurrent generation jobs, 32 sessions total/5 per actor, 64 MiB pending stream bytes, 10 s generation and write timeouts. Ready sessions expire after 30 s; active sessions expire 180 s after the last successful client KeepAlive. Send KeepAlive around every 30 s, also while paused. Data and SSE heartbeats do not renew a lease.
+
+Server metrics report active sessions/jobs, buffered bytes, batch count, errors, lease expiry, backpressure, total generation duration and bytes. They contain no actor/session labels or generated payloads. Changes to defaults require a new load run and documentation update.

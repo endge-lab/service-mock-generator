@@ -1,0 +1,327 @@
+goroutine 68 [running]:
+runtime/pprof.writeGoroutineStacks({0x1016a7238, 0x54cdd0e1a1e0})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/pprof/pprof.go:819 +0x6c
+runtime/pprof.writeGoroutine({0x1016a7238?, 0x54cdd0e1a1e0?}, 0x54cdd1040828?)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/pprof/pprof.go:782 +0x2c
+runtime/pprof.(*Profile).WriteTo(0x100f06eef?, {0x1016a7238?, 0x54cdd0e1a1e0?}, 0x100e6959c?)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/pprof/pprof.go:408 +0x144
+main.main.func1(0x54cdd124e308)
+	/Users/egorkozelskij/PROJECTS/egorkozelskij-endge-monorepo/services/egorkozelskij-endge-service-backend/test/mock-harness/main.go:49 +0x50
+github.com/gofiber/fiber/v2.(*App).next(0x54cdd0db1908, 0x54cdd124e308)
+	/Users/egorkozelskij/go/pkg/mod/github.com/gofiber/fiber/v2@v2.52.13/router.go:143 +0x15c
+github.com/gofiber/fiber/v2.(*App).handler(0x54cdd0db1908, 0x100e3d070?)
+	/Users/egorkozelskij/go/pkg/mod/github.com/gofiber/fiber/v2@v2.52.13/router.go:170 +0x68
+github.com/valyala/fasthttp.(*Server).serveConnCounted(0x54cdd0dd06c8, {0x1016b51b0, 0x54cdd0f02028}, 0x20?)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2618 +0xea0
+github.com/valyala/fasthttp.(*Server).serveConn(...)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2307
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd10080e0)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:225 +0x6c
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71ea00, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0de0780?, 0x10099c88c?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Accept(0x54cdd0de0780)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:613 +0x214
+net.(*netFD).accept(0x54cdd0de0780)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_unix.go:150 +0x28
+net.(*TCPListener).accept(0x54cdd0cd4d40)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/tcpsock_posix.go:159 +0x24
+net.(*TCPListener).Accept(0x54cdd0cd4d40)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/tcpsock.go:387 +0x2c
+github.com/valyala/fasthttp.acceptConn(0x54cdd0dd06c8, {0x1016add80, 0x54cdd0cd4d40}, 0x54cdd138d990)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2108 +0x44
+github.com/valyala/fasthttp.(*Server).Serve(0x54cdd0dd06c8, {0x1016add80, 0x54cdd0cd4d40})
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:1996 +0x438
+github.com/gofiber/fiber/v2.(*App).Listen(0x54cdd0db1908, {0x54cdd0c1ee40?, 0x54cdd0c410c0?})
+	/Users/egorkozelskij/go/pkg/mod/github.com/gofiber/fiber/v2@v2.52.13/listen.go:93 +0x18c
+main.main()
+	/Users/egorkozelskij/PROJECTS/egorkozelskij-endge-monorepo/services/egorkozelskij-endge-service-backend/test/mock-harness/main.go:70 +0x760
+
+goroutine 8 [chan receive]:
+google.golang.org/grpc/internal/grpcsync.(*CallbackSerializer).run(0x54cdd0c40fc0, {0x1016aeea0, 0x54cdd0db25a0})
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/grpcsync/callback_serializer.go:88 +0xcc
+created by google.golang.org/grpc/internal/grpcsync.NewCallbackSerializer in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/grpcsync/callback_serializer.go:52 +0x10c
+
+goroutine 9 [chan receive]:
+google.golang.org/grpc/internal/grpcsync.(*CallbackSerializer).run(0x54cdd0c40ff0, {0x1016aeea0, 0x54cdd0db25f0})
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/grpcsync/callback_serializer.go:88 +0xcc
+created by google.golang.org/grpc/internal/grpcsync.NewCallbackSerializer in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/grpcsync/callback_serializer.go:52 +0x10c
+
+goroutine 10 [chan receive]:
+google.golang.org/grpc/internal/grpcsync.(*CallbackSerializer).run(0x54cdd0c41020, {0x1016aeea0, 0x54cdd0db2640})
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/grpcsync/callback_serializer.go:88 +0xcc
+created by google.golang.org/grpc/internal/grpcsync.NewCallbackSerializer in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/grpcsync/callback_serializer.go:52 +0x10c
+
+goroutine 11 [select]:
+github.com/endge-lab/service-backend/internal/usecase/mock_data.(*UseCase).Start.func1()
+	/Users/egorkozelskij/PROJECTS/egorkozelskij-endge-monorepo/services/egorkozelskij-endge-service-backend/internal/usecase/mock_data/usecase.go:58 +0xac
+created by github.com/endge-lab/service-backend/internal/usecase/mock_data.(*UseCase).Start in goroutine 1
+	/Users/egorkozelskij/PROJECTS/egorkozelskij-endge-monorepo/services/egorkozelskij-endge-service-backend/internal/usecase/mock_data/usecase.go:54 +0x5c
+
+goroutine 12 [sleep]:
+time.Sleep(0x2540be400)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/time.go:363 +0x150
+github.com/valyala/fasthttp.(*workerPool).Start.func2()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:68 +0x50
+created by github.com/valyala/fasthttp.(*workerPool).Start in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:60 +0xbc
+
+goroutine 13 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71e800, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0de0900?, 0x54cdd0de7000?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x54cdd0de0900, {0x54cdd0de7000, 0x1000, 0x1000})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:165 +0x234
+net.(*netFD).Read(0x54cdd0de0900, {0x54cdd0de7000?, 0x54cd66186301?, 0x1017d2120?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_posix.go:68 +0x28
+net.(*conn).Read(0x54cdd0c0e5a0, {0x54cdd0de7000?, 0x54cdd0c5bba8?, 0x100e2e578?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/net.go:196 +0x34
+bufio.(*Reader).fill(0x54cdd0cd2a20)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:113 +0xe0
+bufio.(*Reader).Peek(0x54cdd0cd2a20, 0x1)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:152 +0x58
+github.com/valyala/fasthttp.(*Server).serveConnCounted(0x54cdd0dd06c8, {0x1016b51b0, 0x54cdd0c0e5a0}, 0x20?)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2406 +0x730
+github.com/valyala/fasthttp.(*Server).serveConn(...)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2307
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd0cc6e60)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:225 +0x6c
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 14 [sleep]:
+time.Sleep(0x3b9aca00)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/time.go:363 +0x150
+github.com/valyala/fasthttp.updateServerDate.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/header.go:2379 +0x24
+created by github.com/valyala/fasthttp.updateServerDate in goroutine 13
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/header.go:2377 +0x28
+
+goroutine 15 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71e600, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0de0a00?, 0x54cdd0d1c000?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x54cdd0de0a00, {0x54cdd0d1c000, 0x1000, 0x1000})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:165 +0x234
+net.(*netFD).Read(0x54cdd0de0a00, {0x54cdd0d1c000?, 0x54cd663fc2fc?, 0x1017d2120?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_posix.go:68 +0x28
+net.(*conn).Read(0x54cdd0f02008, {0x54cdd0d1c000?, 0x54cdd0f75ba8?, 0x100e2e578?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/net.go:196 +0x34
+bufio.(*Reader).fill(0x54cdd0e28060)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:113 +0xe0
+bufio.(*Reader).Peek(0x54cdd0e28060, 0x1)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:152 +0x58
+github.com/valyala/fasthttp.(*Server).serveConnCounted(0x54cdd0dd06c8, {0x1016b51b0, 0x54cdd0f02008}, 0x20?)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2406 +0x730
+github.com/valyala/fasthttp.(*Server).serveConn(...)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2307
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd0cc6ec0)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:225 +0x6c
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 16 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71e400, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0de0a80?, 0x54cdd0e25000?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x54cdd0de0a80, {0x54cdd0e25000, 0x1000, 0x1000})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:165 +0x234
+net.(*netFD).Read(0x54cdd0de0a80, {0x54cdd0e25000?, 0x54cd663fcaef?, 0x1017d2120?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_posix.go:68 +0x28
+net.(*conn).Read(0x54cdd0f02010, {0x54cdd0e25000?, 0x54cdd0f9dba8?, 0x100e2e578?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/net.go:196 +0x34
+bufio.(*Reader).fill(0x54cdd0e28000)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:113 +0xe0
+bufio.(*Reader).Peek(0x54cdd0e28000, 0x1)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:152 +0x58
+github.com/valyala/fasthttp.(*Server).serveConnCounted(0x54cdd0dd06c8, {0x1016b51b0, 0x54cdd0f02010}, 0x1d?)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2406 +0x730
+github.com/valyala/fasthttp.(*Server).serveConn(...)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2307
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd0cc6ee0)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:225 +0x6c
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 17 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71e200, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0de0b00?, 0x54cdd0e3b000?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x54cdd0de0b00, {0x54cdd0e3b000, 0x1000, 0x1000})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:165 +0x234
+net.(*netFD).Read(0x54cdd0de0b00, {0x54cdd0e3b000?, 0x54cd663fbe37?, 0x54cdd0cb1008?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_posix.go:68 +0x28
+net.(*conn).Read(0x54cdd0f02018, {0x54cdd0e3b000?, 0x54cdd0c5bba8?, 0x100e2e578?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/net.go:196 +0x34
+bufio.(*Reader).fill(0x54cdd0cd2ae0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:113 +0xe0
+bufio.(*Reader).Peek(0x54cdd0cd2ae0, 0x1)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:152 +0x58
+github.com/valyala/fasthttp.(*Server).serveConnCounted(0x54cdd0dd06c8, {0x1016b51b0, 0x54cdd0f02018}, 0x1d?)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2406 +0x730
+github.com/valyala/fasthttp.(*Server).serveConn(...)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2307
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd0cc6f00)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:225 +0x6c
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 18 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71e000, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0de0b80?, 0x54cdd0e42000?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x54cdd0de0b80, {0x54cdd0e42000, 0x1000, 0x1000})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:165 +0x234
+net.(*netFD).Read(0x54cdd0de0b80, {0x54cdd0e42000?, 0x54cd663fb8db?, 0x1017d2120?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_posix.go:68 +0x28
+net.(*conn).Read(0x54cdd0f02020, {0x54cdd0e42000?, 0x54cdd11f9ba8?, 0x100e2e578?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/net.go:196 +0x34
+bufio.(*Reader).fill(0x54cdd0cd2b40)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:113 +0xe0
+bufio.(*Reader).Peek(0x54cdd0cd2b40, 0x1)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:152 +0x58
+github.com/valyala/fasthttp.(*Server).serveConnCounted(0x54cdd0dd06c8, {0x1016b51b0, 0x54cdd0f02020}, 0x1d?)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2406 +0x730
+github.com/valyala/fasthttp.(*Server).serveConn(...)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/server.go:2307
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd0cc6f20)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:225 +0x6c
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 38 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71de00, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0d36180?, 0x54cdd0d1d000?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x54cdd0d36180, {0x54cdd0d1d000, 0x1000, 0x1000})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:165 +0x234
+net.(*netFD).Read(0x54cdd0d36180, {0x54cdd0d1d000?, 0x80?, 0x8?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_posix.go:68 +0x28
+net.(*conn).Read(0x54cdd0d02028, {0x54cdd0d1d000?, 0x0?, 0x54cdd0cd7d28?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/net.go:196 +0x34
+net/http.(*persistConn).Read(0x54cdd0d40000, {0x54cdd0d1d000?, 0x1016a7278?, 0x1017a87d0?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/http/transport.go:2174 +0x48
+bufio.(*Reader).fill(0x54cdd0e280c0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:113 +0xe0
+bufio.(*Reader).Peek(0x54cdd0e280c0, 0x1)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:152 +0x58
+net/http.(*persistConn).readLoop(0x54cdd0d40000)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/http/transport.go:2330 +0x110
+created by net/http.(*Transport).dialConn in goroutine 33
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/http/transport.go:1994 +0x109c
+
+goroutine 39 [select]:
+net/http.(*persistConn).writeLoop(0x54cdd0d40000)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/http/transport.go:2652 +0x98
+created by net/http.(*Transport).dialConn in goroutine 33
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/http/transport.go:1995 +0x10e4
+
+goroutine 50 [select]:
+google.golang.org/grpc/internal/transport.(*http2Client).keepalive(0x54cdd0ee0008)
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/http2_client.go:1783 +0x134
+created by google.golang.org/grpc/internal/transport.NewHTTP2Client in goroutine 40
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/http2_client.go:410 +0x1418
+
+goroutine 51 [IO wait]:
+internal/poll.runtime_pollWait(0x12a71dc00, 0x72)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/runtime/netpoll.go:351 +0xa0
+internal/poll.(*pollDesc).wait(0x54cdd0eca080?, 0x54cdd0ed6000?, 0x0)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:84 +0x28
+internal/poll.(*pollDesc).waitRead(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x54cdd0eca080, {0x54cdd0ed6000, 0x8000, 0x8000})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/internal/poll/fd_unix.go:165 +0x234
+net.(*netFD).Read(0x54cdd0eca080, {0x54cdd0ed6000?, 0x17?, 0x1?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/fd_posix.go:68 +0x28
+net.(*conn).Read(0x54cdd0c0e5b8, {0x54cdd0ed6000?, 0x100c5ce80?, 0x54cdd11d7c00?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/net/net.go:196 +0x34
+bufio.(*Reader).Read(0x54cdd0ed4000, {0x54cdd0eac124, 0x9, 0x54cdd106e000?})
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/bufio/bufio.go:245 +0x188
+io.ReadAtLeast({0x1016a7578, 0x54cdd0ed4000}, {0x54cdd0eac124, 0x9, 0x9}, 0x9)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/io/io.go:335 +0x98
+io.ReadFull(...)
+	/opt/homebrew/Cellar/go/1.26.1/libexec/src/io/io.go:354
+golang.org/x/net/http2.readFrameHeader({0x54cdd0eac124, 0x9, 0x54cdd1135db8?}, {0x1016a7578?, 0x54cdd0ed4000?})
+	/Users/egorkozelskij/go/pkg/mod/golang.org/x/net@v0.56.0/http2/frame.go:250 +0x58
+golang.org/x/net/http2.(*Framer).ReadFrameHeader(0x54cdd0eac0e0)
+	/Users/egorkozelskij/go/pkg/mod/golang.org/x/net@v0.56.0/http2/frame.go:513 +0x60
+google.golang.org/grpc/internal/transport.(*framer).readFrame(0x54cdd0eca100)
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/http_util.go:493 +0x44
+google.golang.org/grpc/internal/transport.(*http2Client).reader(0x54cdd0ee0008, 0x54cdd0d125b0)
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/http2_client.go:1709 +0x150
+created by google.golang.org/grpc/internal/transport.NewHTTP2Client in goroutine 40
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/http2_client.go:420 +0x1474
+
+goroutine 52 [select]:
+google.golang.org/grpc/internal/transport.(*controlBuffer).get(0x54cdd0ea4140, 0x1)
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/controlbuf.go:420 +0x13c
+google.golang.org/grpc/internal/transport.(*loopyWriter).run(0x54cdd0cdfe00)
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/controlbuf.go:597 +0x6c
+google.golang.org/grpc/internal/transport.NewHTTP2Client.func6()
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/http2_client.go:478 +0xac
+created by google.golang.org/grpc/internal/transport.NewHTTP2Client in goroutine 40
+	/Users/egorkozelskij/go/pkg/mod/google.golang.org/grpc@v1.82.0/internal/transport/http2_client.go:476 +0x18d0
+
+goroutine 65 [chan receive]:
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd1008080)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:220 +0x44
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 66 [chan receive]:
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd10080a0)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:220 +0x44
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4
+
+goroutine 67 [chan receive]:
+github.com/valyala/fasthttp.(*workerPool).workerFunc(0x54cdd0c60ea0, 0x54cdd10080c0)
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:220 +0x44
+github.com/valyala/fasthttp.(*workerPool).getCh.func1()
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:197 +0x30
+created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
+	/Users/egorkozelskij/go/pkg/mod/github.com/valyala/fasthttp@v1.72.0/workerpool.go:196 +0x1b4

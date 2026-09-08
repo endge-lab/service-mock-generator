@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-  go build -trimpath -ldflags="-s -w" -buildvcs=false -o /out/service-template-go ./cmd/main.go
+  go build -trimpath -ldflags="-s -w -X github.com/endge-lab/service-mock-generator/internal/buildinfo.Version=$(cat VERSION)" -buildvcs=false -o /out/service-mock-generator ./cmd/main.go
 
 FROM ${BASE_RUNTIME_IMAGE}
 
@@ -23,12 +23,12 @@ WORKDIR /app
 RUN addgroup -S app && adduser -S app -G app \
   && apk add --no-cache ca-certificates tzdata
 
-COPY --from=builder /out/service-template-go /app/service-template-go
-COPY migrations /app/migrations
+COPY --from=builder /out/service-mock-generator /app/service-mock-generator
+COPY configs /app/configs
 COPY docs /app/docs
 
 USER app
 
-EXPOSE 8080
+EXPOSE 8082 50052
 
-ENTRYPOINT ["/app/service-template-go"]
+ENTRYPOINT ["/app/service-mock-generator"]

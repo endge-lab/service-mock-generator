@@ -3,8 +3,8 @@ package bootstrap
 import (
 	"context"
 
-	"github.com/endge-lab/service-template-go/internal/config"
-	"github.com/endge-lab/service-template-go/internal/platform"
+	"github.com/endge-lab/service-mock-generator/internal/config"
+	"github.com/endge-lab/service-mock-generator/internal/platform"
 
 	"go.uber.org/fx"
 	"go.uber.org/zap"

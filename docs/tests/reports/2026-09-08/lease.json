@@ -1,0 +1,2204 @@
+{
+  "checks": [
+    "ownership, RBAC, double subscribe, strict patch, stop",
+    "per-user admission quota",
+    "invalid and impossible schemas rejected",
+    "1 create/subscribe/update/keepalive/stop cycles",
+    "real 180-second lease expired while data continued",
+    "global 32-session admission quota across distinct users",
+    "abrupt SSE disconnects release both maps",
+    "non-reading SSE client reaches write deadline and cleanup",
+    "mock restart drops old sessions",
+    "backend restart drops old sessions",
+    "0 seconds mixed load; 0 cycles"
+  ],
+  "samples": [
+    {
+      "seconds": 0.14,
+      "mock": {
+        "generation": {
+          "Calls": 1,
+          "Failures": 0,
+          "DurationNanos": 41250,
+          "Items": 3,
+          "ResultBytes": 84
+        },
+        "goroutines": 13,
+        "heap": 1539152,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 0,
+          "batches": 1,
+          "errors": 0,
+          "backpressure": 0
+        },
+        "rssKiB": 24224
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1268824,
+        "sessions": 0,
+        "rssKiB": 21136
+      }
+    },
+    {
+      "seconds": 0.15,
+      "mock": {
+        "generation": {
+          "Calls": 1,
+          "Failures": 0,
+          "DurationNanos": 41250,
+          "Items": 3,
+          "ResultBytes": 84
+        },
+        "goroutines": 13,
+        "heap": 1990624,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 0,
+          "batches": 1,
+          "errors": 0,
+          "backpressure": 0
+        },
+        "rssKiB": 24400
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1424392,
+        "sessions": 0,
+        "rssKiB": 21232
+      }
+    },
+    {
+      "seconds": 0.16,
+      "mock": {
+        "generation": {
+          "Calls": 4,
+          "Failures": 1,
+          "DurationNanos": 127084,
+          "Items": 8,
+          "ResultBytes": 224
+        },
+        "goroutines": 13,
+        "heap": 2340296,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 0,
+          "batches": 3,
+          "errors": 0,
+          "backpressure": 0
+        },
+        "rssKiB": 24704
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 15,
+        "heap": 1586768,
+        "sessions": 0,
+        "rssKiB": 21488
+      }
+    },
+    {
+      "seconds": 181.01,
+      "mock": {
+        "generation": {
+          "Calls": 1787,
+          "Failures": 1,
+          "DurationNanos": 236538087,
+          "Items": 5357,
+          "ResultBytes": 149404
+        },
+        "goroutines": 11,
+        "heap": 3154584,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1786,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28304
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 13,
+        "heap": 2583216,
+        "sessions": 0,
+        "rssKiB": 25536
+      }
+    },
+    {
+      "seconds": 181.05,
+      "mock": {
+        "generation": {
+          "Calls": 1787,
+          "Failures": 1,
+          "DurationNanos": 236538087,
+          "Items": 5357,
+          "ResultBytes": 149404
+        },
+        "goroutines": 11,
+        "heap": 2878608,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1786,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28416
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 13,
+        "heap": 1233832,
+        "sessions": 0,
+        "rssKiB": 26064
+      }
+    },
+    {
+      "seconds": 181.06,
+      "mock": {
+        "generation": {
+          "Calls": 1788,
+          "Failures": 1,
+          "DurationNanos": 236583837,
+          "Items": 5360,
+          "ResultBytes": 149488
+        },
+        "goroutines": 12,
+        "heap": 3003456,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1787,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28416
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1345688,
+        "sessions": 1,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 181.38,
+      "mock": {
+        "generation": {
+          "Calls": 1790,
+          "Failures": 1,
+          "DurationNanos": 236760795,
+          "Items": 5366,
+          "ResultBytes": 149656
+        },
+        "goroutines": 11,
+        "heap": 3058712,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1789,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28416
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1367568,
+        "sessions": 0,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 181.4,
+      "mock": {
+        "generation": {
+          "Calls": 1791,
+          "Failures": 1,
+          "DurationNanos": 236838586,
+          "Items": 5369,
+          "ResultBytes": 149740
+        },
+        "goroutines": 12,
+        "heap": 3177208,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1790,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28416
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1401728,
+        "sessions": 1,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 181.72,
+      "mock": {
+        "generation": {
+          "Calls": 1793,
+          "Failures": 1,
+          "DurationNanos": 237115711,
+          "Items": 5375,
+          "ResultBytes": 149908
+        },
+        "goroutines": 11,
+        "heap": 3266640,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1792,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28416
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1420144,
+        "sessions": 0,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 181.74,
+      "mock": {
+        "generation": {
+          "Calls": 1794,
+          "Failures": 1,
+          "DurationNanos": 237574503,
+          "Items": 5378,
+          "ResultBytes": 149992
+        },
+        "goroutines": 12,
+        "heap": 1718976,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1793,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1459176,
+        "sessions": 1,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 182.05,
+      "mock": {
+        "generation": {
+          "Calls": 1796,
+          "Failures": 1,
+          "DurationNanos": 237801252,
+          "Items": 5384,
+          "ResultBytes": 150160
+        },
+        "goroutines": 11,
+        "heap": 1789080,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1795,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1475584,
+        "sessions": 0,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 182.07,
+      "mock": {
+        "generation": {
+          "Calls": 1797,
+          "Failures": 1,
+          "DurationNanos": 237872752,
+          "Items": 5387,
+          "ResultBytes": 150244
+        },
+        "goroutines": 12,
+        "heap": 1900712,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1796,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1507368,
+        "sessions": 1,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 182.39,
+      "mock": {
+        "generation": {
+          "Calls": 1799,
+          "Failures": 1,
+          "DurationNanos": 238132502,
+          "Items": 5393,
+          "ResultBytes": 150412
+        },
+        "goroutines": 11,
+        "heap": 1966280,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1798,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1524216,
+        "sessions": 0,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 182.41,
+      "mock": {
+        "generation": {
+          "Calls": 1800,
+          "Failures": 1,
+          "DurationNanos": 238201335,
+          "Items": 5396,
+          "ResultBytes": 150496
+        },
+        "goroutines": 12,
+        "heap": 2117496,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1799,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1561592,
+        "sessions": 1,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 182.72,
+      "mock": {
+        "generation": {
+          "Calls": 1803,
+          "Failures": 1,
+          "DurationNanos": 239126752,
+          "Items": 5405,
+          "ResultBytes": 150748
+        },
+        "goroutines": 11,
+        "heap": 2192136,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1802,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1579544,
+        "sessions": 0,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 182.74,
+      "mock": {
+        "generation": {
+          "Calls": 1804,
+          "Failures": 1,
+          "DurationNanos": 239201877,
+          "Items": 5408,
+          "ResultBytes": 150832
+        },
+        "goroutines": 12,
+        "heap": 2300920,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1803,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1609232,
+        "sessions": 1,
+        "rssKiB": 26080
+      }
+    },
+    {
+      "seconds": 183.06,
+      "mock": {
+        "generation": {
+          "Calls": 1806,
+          "Failures": 1,
+          "DurationNanos": 239385585,
+          "Items": 5414,
+          "ResultBytes": 151000
+        },
+        "goroutines": 11,
+        "heap": 2355976,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1805,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1629624,
+        "sessions": 0,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 183.08,
+      "mock": {
+        "generation": {
+          "Calls": 1807,
+          "Failures": 1,
+          "DurationNanos": 239445001,
+          "Items": 5417,
+          "ResultBytes": 151084
+        },
+        "goroutines": 12,
+        "heap": 2463672,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1806,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1658048,
+        "sessions": 1,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 183.39,
+      "mock": {
+        "generation": {
+          "Calls": 1809,
+          "Failures": 1,
+          "DurationNanos": 239741043,
+          "Items": 5423,
+          "ResultBytes": 151252
+        },
+        "goroutines": 11,
+        "heap": 2518904,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1808,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1674192,
+        "sessions": 0,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 183.41,
+      "mock": {
+        "generation": {
+          "Calls": 1810,
+          "Failures": 1,
+          "DurationNanos": 239818126,
+          "Items": 5426,
+          "ResultBytes": 151336
+        },
+        "goroutines": 12,
+        "heap": 2627168,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1809,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1702208,
+        "sessions": 1,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 183.73,
+      "mock": {
+        "generation": {
+          "Calls": 1812,
+          "Failures": 1,
+          "DurationNanos": 240070585,
+          "Items": 5432,
+          "ResultBytes": 151504
+        },
+        "goroutines": 11,
+        "heap": 2687600,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1811,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1718872,
+        "sessions": 0,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 183.76,
+      "mock": {
+        "generation": {
+          "Calls": 1813,
+          "Failures": 1,
+          "DurationNanos": 240153544,
+          "Items": 5435,
+          "ResultBytes": 151588
+        },
+        "goroutines": 12,
+        "heap": 2795520,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1812,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1747896,
+        "sessions": 1,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 184.07,
+      "mock": {
+        "generation": {
+          "Calls": 1816,
+          "Failures": 1,
+          "DurationNanos": 240596044,
+          "Items": 5444,
+          "ResultBytes": 151840
+        },
+        "goroutines": 11,
+        "heap": 2868736,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1815,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1765672,
+        "sessions": 0,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 184.09,
+      "mock": {
+        "generation": {
+          "Calls": 1817,
+          "Failures": 1,
+          "DurationNanos": 240679711,
+          "Items": 5447,
+          "ResultBytes": 151924
+        },
+        "goroutines": 12,
+        "heap": 2977104,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1816,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1799752,
+        "sessions": 1,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 184.41,
+      "mock": {
+        "generation": {
+          "Calls": 1820,
+          "Failures": 1,
+          "DurationNanos": 241066794,
+          "Items": 5456,
+          "ResultBytes": 152176
+        },
+        "goroutines": 11,
+        "heap": 3050496,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1819,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1817992,
+        "sessions": 0,
+        "rssKiB": 26112
+      }
+    },
+    {
+      "seconds": 184.42,
+      "mock": {
+        "generation": {
+          "Calls": 1821,
+          "Failures": 1,
+          "DurationNanos": 241325044,
+          "Items": 5459,
+          "ResultBytes": 152260
+        },
+        "goroutines": 12,
+        "heap": 1754656,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1820,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1846256,
+        "sessions": 1,
+        "rssKiB": 26128
+      }
+    },
+    {
+      "seconds": 184.74,
+      "mock": {
+        "generation": {
+          "Calls": 1823,
+          "Failures": 1,
+          "DurationNanos": 241537253,
+          "Items": 5465,
+          "ResultBytes": 152428
+        },
+        "goroutines": 11,
+        "heap": 1816992,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1822,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1862312,
+        "sessions": 0,
+        "rssKiB": 26128
+      }
+    },
+    {
+      "seconds": 184.76,
+      "mock": {
+        "generation": {
+          "Calls": 1824,
+          "Failures": 1,
+          "DurationNanos": 241614753,
+          "Items": 5468,
+          "ResultBytes": 152512
+        },
+        "goroutines": 12,
+        "heap": 1926088,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1823,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1890208,
+        "sessions": 1,
+        "rssKiB": 26128
+      }
+    },
+    {
+      "seconds": 185.08,
+      "mock": {
+        "generation": {
+          "Calls": 1826,
+          "Failures": 1,
+          "DurationNanos": 241850379,
+          "Items": 5474,
+          "ResultBytes": 152680
+        },
+        "goroutines": 11,
+        "heap": 1981256,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1825,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 28432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 1907448,
+        "sessions": 0,
+        "rssKiB": 26160
+      }
+    },
+    {
+      "seconds": 185.1,
+      "mock": {
+        "generation": {
+          "Calls": 1827,
+          "Failures": 1,
+          "DurationNanos": 241850379,
+          "Items": 5474,
+          "ResultBytes": 152680
+        },
+        "goroutines": 12,
+        "heap": 3002712,
+        "stream": {
+          "sessions": 1,
+          "jobs": 1,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1825,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 30208
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 1982760,
+        "sessions": 1,
+        "rssKiB": 26224
+      }
+    },
+    {
+      "seconds": 185.41,
+      "mock": {
+        "generation": {
+          "Calls": 1829,
+          "Failures": 1,
+          "DurationNanos": 262425296,
+          "Items": 5477,
+          "ResultBytes": 6154483
+        },
+        "goroutines": 12,
+        "heap": 8072864,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1828,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 40512
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 17,
+        "heap": 23236680,
+        "sessions": 1,
+        "rssKiB": 46768
+      }
+    },
+    {
+      "seconds": 185.73,
+      "mock": {
+        "generation": {
+          "Calls": 1832,
+          "Failures": 1,
+          "DurationNanos": 279881796,
+          "Items": 5480,
+          "ResultBytes": 12156286
+        },
+        "goroutines": 12,
+        "heap": 8045416,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1831,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 40592
+      },
+      "backend": {
+        "bufferedBytes": 2000712,
+        "goroutines": 17,
+        "heap": 35301272,
+        "sessions": 1,
+        "rssKiB": 58560
+      }
+    },
+    {
+      "seconds": 186.05,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 11985568,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31325872,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 186.37,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 11991792,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31334200,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 186.69,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 11995176,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31335216,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 187.01,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 11998560,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31336232,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 187.34,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12001944,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31344160,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 187.66,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12005328,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31350048,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 187.98,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12008712,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31351064,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 188.31,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12012096,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31352080,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 188.62,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12015480,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31353712,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 188.95,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12029376,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31354728,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 189.26,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12033360,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31355744,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 189.58,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12036744,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31356848,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 189.9,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12040128,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31357864,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 190.23,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12043512,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31358880,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 190.55,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12046896,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31359984,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 190.87,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12050328,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31361000,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 191.19,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12053712,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31362016,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 191.51,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12057096,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31363120,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 191.83,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12060480,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31364136,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 192.15,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12063864,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31365152,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 192.48,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12067248,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31366256,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 192.8,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12070632,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31367272,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 193.12,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12084528,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31368288,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 193.45,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12088512,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31369392,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 193.77,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12091896,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31370408,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 194.09,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12095280,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31371424,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 194.41,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12098664,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31372528,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 194.73,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12102048,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42800
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31373544,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 195.05,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12115944,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42816
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31374560,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 195.37,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12119928,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42816
+      },
+      "backend": {
+        "bufferedBytes": 4001424,
+        "goroutines": 17,
+        "heap": 31375664,
+        "sessions": 1,
+        "rssKiB": 66432
+      }
+    },
+    {
+      "seconds": 195.7,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 13,
+        "heap": 12123312,
+        "stream": {
+          "sessions": 1,
+          "jobs": 0,
+          "bufferedBytes": 2000601,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 0
+        },
+        "rssKiB": 42816
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 31396240,
+        "sessions": 0,
+        "rssKiB": 66480
+      }
+    },
+    {
+      "seconds": 196.01,
+      "mock": {
+        "generation": {
+          "Calls": 1835,
+          "Failures": 1,
+          "DurationNanos": 297251045,
+          "Items": 5483,
+          "ResultBytes": 18158089
+        },
+        "goroutines": 11,
+        "heap": 12216192,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 1,
+          "batches": 1833,
+          "errors": 1,
+          "backpressure": 1
+        },
+        "rssKiB": 42816
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 31397240,
+        "sessions": 0,
+        "rssKiB": 66480
+      }
+    },
+    {
+      "seconds": 198.16,
+      "mock": {
+        "generation": {
+          "Calls": 0,
+          "Failures": 0,
+          "DurationNanos": 0,
+          "Items": 0,
+          "ResultBytes": 0
+        },
+        "goroutines": 11,
+        "heap": 2566056,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 0,
+          "batches": 0,
+          "errors": 0,
+          "backpressure": 0
+        },
+        "rssKiB": 20432
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 14,
+        "heap": 31539728,
+        "sessions": 0,
+        "rssKiB": 66480
+      }
+    },
+    {
+      "seconds": 200.3,
+      "mock": {
+        "generation": {
+          "Calls": 1,
+          "Failures": 0,
+          "DurationNanos": 65417,
+          "Items": 3,
+          "ResultBytes": 84
+        },
+        "goroutines": 10,
+        "heap": 2897120,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 0,
+          "batches": 1,
+          "errors": 0,
+          "backpressure": 0
+        },
+        "rssKiB": 22528
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 9,
+        "heap": 725112,
+        "sessions": 0,
+        "rssKiB": 17280
+      }
+    },
+    {
+      "seconds": 200.41,
+      "mock": {
+        "generation": {
+          "Calls": 201,
+          "Failures": 1,
+          "DurationNanos": 7578251,
+          "Items": 501,
+          "ResultBytes": 14028
+        },
+        "goroutines": 13,
+        "heap": 2342144,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 0,
+          "batches": 199,
+          "errors": 6,
+          "backpressure": 1
+        },
+        "rssKiB": 28640
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 21,
+        "heap": 1677736,
+        "sessions": 0,
+        "rssKiB": 27808
+      }
+    },
+    {
+      "seconds": 200.42,
+      "mock": {
+        "generation": {
+          "Calls": 201,
+          "Failures": 1,
+          "DurationNanos": 7578251,
+          "Items": 501,
+          "ResultBytes": 14028
+        },
+        "goroutines": 13,
+        "heap": 2648448,
+        "stream": {
+          "sessions": 0,
+          "jobs": 0,
+          "bufferedBytes": 0,
+          "expired": 0,
+          "batches": 199,
+          "errors": 6,
+          "backpressure": 1
+        },
+        "rssKiB": 28992
+      },
+      "backend": {
+        "bufferedBytes": 0,
+        "goroutines": 21,
+        "heap": 2752520,
+        "sessions": 0,
+        "rssKiB": 29216
+      }
+    }
+  ],
+  "errors": [],
+  "binariesSha256": {
+    "mock": "ba620b5b607eab26f1695b76ce5a4c36708e9480c6023aea7b586ee6d0c7f526",
+    "backend": "57b25214fe278cf27ae2b7dc69d3711e270da8f80e8999f3d6e0ac3e2d1c6c65"
+  },
+  "leaseElapsedSeconds": 180.841,
+  "leaseDataBatches": 1783,
+  "mixedBaseline": {
+    "seconds": 200.41,
+    "mock": {
+      "generation": {
+        "Calls": 201,
+        "Failures": 1,
+        "DurationNanos": 7578251,
+        "Items": 501,
+        "ResultBytes": 14028
+      },
+      "goroutines": 13,
+      "heap": 2342144,
+      "stream": {
+        "sessions": 0,
+        "jobs": 0,
+        "bufferedBytes": 0,
+        "expired": 0,
+        "batches": 199,
+        "errors": 6,
+        "backpressure": 1
+      },
+      "rssKiB": 28640
+    },
+    "backend": {
+      "bufferedBytes": 0,
+      "goroutines": 21,
+      "heap": 1677736,
+      "sessions": 0,
+      "rssKiB": 27808
+    }
+  },
+  "mixedFinal": {
+    "seconds": 200.42,
+    "mock": {
+      "generation": {
+        "Calls": 201,
+        "Failures": 1,
+        "DurationNanos": 7578251,
+        "Items": 501,
+        "ResultBytes": 14028
+      },
+      "goroutines": 13,
+      "heap": 2648448,
+      "stream": {
+        "sessions": 0,
+        "jobs": 0,
+        "bufferedBytes": 0,
+        "expired": 0,
+        "batches": 199,
+        "errors": 6,
+        "backpressure": 1
+      },
+      "rssKiB": 28992
+    },
+    "backend": {
+      "bufferedBytes": 0,
+      "goroutines": 21,
+      "heap": 2752520,
+      "sessions": 0,
+      "rssKiB": 29216
+    }
+  },
+  "mixedCycles": 0,
+  "mixedSeconds": 0.02,
+  "result": "passed",
+  "elapsedSeconds": 200.43,
+  "latencyMs": {
+    "count": 611,
+    "p50": 0.461,
+    "p95": 1.184,
+    "max": 14.169
+  }
+}

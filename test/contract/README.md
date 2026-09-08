@@ -1,7 +1,3 @@
-# Contract Tests
+# Mock Generator verification
 
-Здесь хранятся contract-тесты внешнего API:
-
-- HTTP status codes
-- request/response payload shape
-- совместимость `docs/openapi3.yaml` с реальным поведением handlers
+See [verification strategy](../../docs/tests/README.md). The generator has no persistence/migration suite; network cases use local test doubles or the isolated harness.

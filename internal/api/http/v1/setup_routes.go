@@ -1,11 +1,10 @@
 package http
 
 import (
-	docs "github.com/endge-lab/service-template-go/internal/api/http/v1/docs"
-	health "github.com/endge-lab/service-template-go/internal/api/http/v1/health"
-	transport "github.com/endge-lab/service-template-go/internal/api/http/v1/transport"
-	"github.com/endge-lab/service-template-go/internal/config"
-	"github.com/endge-lab/service-template-go/internal/middleware"
+	docs "github.com/endge-lab/service-mock-generator/internal/api/http/v1/docs"
+	health "github.com/endge-lab/service-mock-generator/internal/api/http/v1/health"
+	transport "github.com/endge-lab/service-mock-generator/internal/api/http/v1/transport"
+	"github.com/endge-lab/service-mock-generator/internal/config"
 
 	"github.com/gofiber/fiber/v2"
 	"go.opentelemetry.io/otel/metric"
@@ -15,7 +14,6 @@ import (
 func SetupRoutes(
 	app *fiber.App,
 	cfg *config.Config,
-	authMiddleware middleware.AuthMiddleware,
 	meter metric.Meter,
 	logger *zap.Logger,
 ) {
@@ -30,11 +28,6 @@ func SetupRoutes(
 		Version: cfg.App.Version,
 		Env:     cfg.App.Env,
 	})
-
-	api := app.Group("/api/v1")
-	if cfg.Auth.Enabled {
-		api.Use(authMiddleware.AuthMiddleware())
-	}
 
 	app.Use(func(c *fiber.Ctx) error {
 		return transport.WriteErrorResponse(c, transport.ErrRouteNotFound)

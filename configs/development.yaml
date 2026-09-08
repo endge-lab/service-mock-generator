@@ -1,33 +1,31 @@
 app:
   env: development
-  name: service_template
-  version: 0.1.1
-  public_url: http://localhost:8080
+  name: service_mock_generator
+  public_url: http://localhost:8082
 http:
-  port: "8080"
-  cors_allowed_origins: http://localhost:5173
+  port: "8082"
+  cors_allowed_origins: https://cors-disabled.invalid
+grpc:
+  enabled: true
+  port: 50052
+  max_receive_bytes: 3145728
+  max_send_bytes: 23068672
+  graceful_stop_timeout: 10s
 logger:
-  level: debug
-postgres:
-  host: localhost
-  port: 5432
-  user: postgres
-  password: postgres
-  database: service_template
-  schema: public
-  sslmode: disable
-  migrations_enabled: false
+  level: info
 auth:
   enabled: false
-  jwks_path: /.well-known/jwks.json
-  jwks_cache_ttl: 5m
-  timeout: 5s
+service_identity:
+  verifier:
+    enabled: true
+    issuer: http://localhost:8180/realms/endge-local
+    jwks_url: http://localhost:8180/realms/endge-local/protocol/openid-connect/certs
+    audience: endge-mock-generator
+    allowed_callers: endge-service-backend
+    allowed_algorithms: RS256
+    jwks_cache_ttl: 5m
+    timeout: 5s
 telemetry:
   enabled: false
-  otlp_insecure: true
-redpanda:
+postgres:
   enabled: false
-  client_id: service_template
-  dial_timeout: 5s
-  read_batch_timeout: 2s
-  write_timeout: 10s

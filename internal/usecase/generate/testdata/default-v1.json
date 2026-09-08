@@ -1,0 +1,119 @@
+[
+  {
+    "items": [
+      {
+        "at": "2029-02-18T18:13:37Z",
+        "code": "FV7471",
+        "id": "bba3e884-979b-4c8d-b4af-b8d155e061fa",
+        "n": 989.25,
+        "optional": null
+      },
+      {
+        "at": "2029-07-29T07:18:12Z",
+        "code": "SU1894",
+        "id": "64ed5c61-8c70-4a86-ab3c-efa05e0b920f",
+        "n": 368,
+        "optional": null
+      },
+      {
+        "at": "2029-06-28T11:00:27Z",
+        "code": "FV4392",
+        "id": "ea6523b0-4268-4eec-9047-6871dbc2b6b0",
+        "n": -986.25,
+        "optional": null
+      },
+      {
+        "at": "2028-07-18T13:26:00Z",
+        "code": "FV1480",
+        "id": "3f2349d2-2b90-4244-b40a-3eb34e3656e1",
+        "n": -851.25,
+        "optional": true
+      },
+      {
+        "at": "2022-02-14T08:29:20Z",
+        "code": "FV1075",
+        "id": "7ccb1ae0-4332-4aaa-a3c8-381e5a319a2f",
+        "n": 116.5,
+        "optional": null
+      }
+    ],
+    "meta": {
+      "count": 5,
+      "seed": "fixture-seed",
+      "profile": "default-v1"
+    }
+  },
+  {
+    "items": [
+      [
+        68,
+        46,
+        97
+      ],
+      [
+        23,
+        76
+      ],
+      [
+        93,
+        60
+      ],
+      [
+        5,
+        24,
+        28,
+        14,
+        53
+      ],
+      [
+        57,
+        82,
+        86,
+        97,
+        98
+      ]
+    ],
+    "meta": {
+      "count": 5,
+      "seed": "fixture-seed",
+      "profile": "default-v1"
+    }
+  },
+  {
+    "items": [
+      0.1068,
+      0.1097,
+      "東京",
+      0.1077,
+      "Москва"
+    ],
+    "meta": {
+      "count": 5,
+      "seed": "fixture-seed",
+      "profile": "default-v1"
+    }
+  },
+  {
+    "items": [
+      {
+        "x": 7
+      },
+      {
+        "x": 7,
+        "y": true
+      },
+      {
+        "x": 7
+      },
+      {},
+      {
+        "x": 7
+      }
+    ],
+    "meta": {
+      "count": 5,
+      "seed": "fixture-seed",
+      "profile": "default-v1"
+    }
+  }
+]

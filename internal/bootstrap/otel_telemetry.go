@@ -5,7 +5,7 @@ import (
 	"time"
 
 	servicetelemetry "github.com/endge-lab/service-kit-go/pkg/telemetry"
-	"github.com/endge-lab/service-template-go/internal/config"
+	"github.com/endge-lab/service-mock-generator/internal/config"
 
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/trace"

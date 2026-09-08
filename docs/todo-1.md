@@ -1,3 +1,5 @@
+> Актуальный transport: этот генератор вызывается внутренним gRPC API `mockdata.v1`; HTTP endpoint из примеров предоставляется service-backend. Нормативная архитектура — root governance/backend. Сессии и SSE описаны в todo-2.md.
+
 # Техническое задание 1: синхронная генерация JSON-данных по schema
 
 ## 1. Назначение документа
@@ -888,15 +890,15 @@ V1 не поддерживает:
 
 Обязательная последовательность:
 
-1. Проверить `Content-Type`.
-2. Ограничить размер request body до чтения всего содержимого.
+1. Принять JSON request на backend HTTP gateway.
+2. Применить transport body limit и проверить ресурсный лимит Mock перед forwarding.
 3. Декодировать request envelope как JSON.
 4. Запретить неизвестные поля envelope.
 5. Провалидировать generation options.
 6. Проверить `$schema` и dialect.
-7. Скомпилировать schema библиотекой JSON Schema.
-8. Выполнить capability validation поддерживаемого V1 subset.
-9. Разрешить reachable local `$ref` и проверить отсутствие cycles.
+7. Проверить структурные бюджеты, включая literal const/enum/examples/default.
+8. Выполнить capability validation поддерживаемого V1 subset, разрешить reachable local `$ref` и проверить отсутствие cycles.
+9. Скомпилировать schema библиотекой JSON Schema.
 10. Провалидировать relation selectors, mappings и dependency graph.
 11. Создать deterministic random source из seed и profile.
 12. Для каждого root item построить structural и relation generation plan.
@@ -1007,20 +1009,7 @@ Content-Type: application/json
 Все контролируемые ошибки возвращаются в едином envelope:
 
 ```json
-{
-  "code": "schema.reference_missing",
-  "message": "Schema содержит неразрешённую ссылку",
-  "details": {
-    "diagnostics": [
-      {
-        "code": "schema.reference_missing",
-        "path": "/schema/properties/airport/$ref",
-        "reference": "#/$defs/Airport",
-        "message": "Definition Airport отсутствует"
-      }
-    ]
-  }
-}
+{"code":"schema.ref_missing","message":"Reference target does not exist","details":{"path":"/schema/properties/airport/$ref"}}
 ```
 
 ### 15.1. HTTP statuses
@@ -1030,8 +1019,7 @@ Content-Type: application/json
 | `400 Bad Request` | Невалидный JSON, envelope или generation options |
 | `401 Unauthorized` | Endpoint защищён auth middleware и token отсутствует/невалиден |
 | `413 Content Too Large` | Превышен limit request body |
-| `415 Unsupported Media Type` | `Content-Type` не является `application/json` |
-| `422 Unprocessable Entity` | JSON Schema невалидна, не поддержана или негенерируема |
+| `400 Bad Request` | JSON Schema невалидна, не поддержана или негенерируема; сохранён backend error envelope |
 | `429 Too Many Requests` | Превышен rate limit |
 | `500 Internal Server Error` | Неожиданная внутренняя ошибка |
 
@@ -1040,19 +1028,22 @@ Content-Type: application/json
 Минимальный набор:
 
 ```text
-http.invalid_body
-http.validation_failed
-generation.count_out_of_range
+request.invalid
+request.too_large
+generation.count_invalid
 generation.profile_unsupported
-generation.failed
+generation.options_invalid
+generation.seed_invalid
+generation.busy
+generation.limit_exceeded
 schema.dialect_unsupported
 schema.invalid
 schema.keyword_unsupported
-schema.reference_external_forbidden
-schema.reference_missing
-schema.reference_cycle
+schema.ref_unsupported
+schema.ref_missing
+schema.ref_cycle
 schema.not_generatable
-schema.generated_value_invalid
+schema.limit_exceeded
 schema.pattern_unsupported
 relation.invalid
 relation.path_invalid
@@ -1112,7 +1103,7 @@ relation.cycle
 - не помещать generated personal-looking data в logs и traces;
 - ошибки библиотек преобразовывать в безопасные публичные diagnostics.
 
-Если сервис доступен из публичной сети, production deployment должен использовать JWT authentication либо внешний API gateway. Authentication является инфраструктурной границей и не должна связывать generation use case с бизнес-backend.
+Клиент обращается к authenticated backend gateway. Генератор принимает только OIDC service identity backend; production требует TLS. Полный контракт — в todo-2.
 
 ## 18. JSON Schema library для Go
 
@@ -1134,383 +1125,14 @@ github.com/santhosh-tekuri/jsonschema/v6
 
 Библиотека отвечает за стандартную schema compilation/validation. Она не определяет generation profile и не заменяет application generator.
 
-## 19. Чистая архитектура
+## 19. Реализация, transport и поставка
 
-Реализация должна соблюдать Clean Architecture и dependency rule: зависимости направлены от внешних деталей к application/domain, а не наоборот.
+Архитектурные boundaries, OIDC, session lifecycle и HTTP/SSE описаны в [todo-2](todo-2.md), реализация — в [architecture](architecture.md), запуск и проверки — в [README](../README.md) и [tests](tests/README.md). Нормативный профиль принадлежит root governance. Старый WebSocket proposal заменён; бизнесовый HTTP endpoint `/api/v1/mock-data/generate` принадлежит backend gateway.
 
-### 19.1. Слои
+`default-v1` использует SHA-256 UTF-8 seed: первые 16 bytes читаются как два big-endian uint64 для Go `math/rand/v2.NewPCG`. Стабильный лексикографический порядок properties; независимый cursor на запрос/сессию. Время генерируется в UTC в диапазоне 2020-01-01 — 2029-12-31; текущее время не участвует. Числа без bounds используют [-1000,1000], шаг number по умолчанию 0.001; exact rational arithmetic используется для multipleOf. Golden fixtures закрепляют фактическую последовательность.
 
-#### Domain
+Структурные ограничения длины строк, массивов и вложенности применяются также к значениям const/enum/examples/default до compilation и к полному root после relations.
 
-Содержит чистые понятия генерации:
+Входные numeric literals ограничены 128 bytes и exponent [-100,100] до compilation. Regex quantifiers используют обычную десятичную запись без leading zeros. Graph relations имеет дополнительный бюджет сравнений `schemaNodes * attempts`; превышение завершается контролируемым отказом. Это complexity limits, а не silent truncation.
 
-- generation profile identity;
-- generation options;
-- relation definition и generation plan;
-- diagnostics;
-- domain errors;
-- правила и ограничения, не зависящие от Fiber или JSON Schema library.
-
-Domain не импортирует:
-
-- Fiber;
-- `jsonschema/v6`;
-- logger;
-- config framework;
-- HTTP DTO;
-- infrastructure packages.
-
-#### Application
-
-Содержит use case `GenerateMockData`:
-
-1. принимает application command;
-2. вызывает schema compiler/validator port;
-3. выполняет capability validation;
-4. запускает generator;
-5. валидирует результат через port;
-6. возвращает application result.
-
-Application владеет интерфейсами, которые нужны use case. Infrastructure реализует эти интерфейсы.
-
-#### Infrastructure
-
-Содержит adapter для `jsonschema/v6` и другие технические реализации:
-
-- in-memory schema compilation;
-- standard validation;
-- безопасное разрешение resources;
-- mapping library diagnostics;
-- deterministic random source, если он вынесен за пределы domain service.
-
-#### Transport
-
-Содержит Fiber handler и HTTP DTO:
-
-- decode request;
-- transport-level validation;
-- mapping DTO в application command;
-- mapping application result в response DTO;
-- mapping application/domain errors в HTTP status и public error envelope.
-
-Handler не должен содержать рекурсивный generator или schema traversal.
-
-### 19.2. Рекомендуемая структура packages
-
-Имена можно скорректировать в рамках существующего Go template, сохраняя границы:
-
-```text
-internal/
-  api/http/v1/mockdata/
-    dto.go
-    routes.go
-    mapper.go
-
-  application/generate/
-    command.go
-    result.go
-    usecase.go
-    ports.go
-
-  domain/generation/
-    options.go
-    profile.go
-    relation.go
-    relation_plan.go
-    diagnostic.go
-    generator.go
-    errors.go
-
-  infrastructure/jsonschema/
-    compiler.go
-    validator.go
-    capability.go
-    errors.go
-```
-
-Не нужно создавать repository layer: сервис ничего не хранит.
-
-Не нужно добавлять абстракции «на будущее», если у них нет текущего потребителя. Интерфейс должен появляться только на реальной application boundary.
-
-## 20. Подготовка текущего репозитория
-
-Сервис создан из Go template. Перед реализацией business API необходимо:
-
-1. Изменить Go module path:
-
-   ```text
-   github.com/endge-lab/service-template-go
-   ```
-
-   на:
-
-   ```text
-   github.com/endge-lab/service-mock-generator
-   ```
-
-2. Обновить все внутренние Go imports со старого module path на новый.
-3. Переименовать template-названия в README, OpenAPI, config defaults и service metadata.
-4. Не переносить в business flow Postgres, Kafka/Redpanda или repository abstractions.
-5. Сохранить существующие технические endpoints:
-
-   ```text
-   GET /health
-   GET /version
-   GET /swagger
-   GET /swagger/openapi3.yaml
-   ```
-
-6. Зарегистрировать новый endpoint под существующей группой `/api/v1`.
-
-## 21. OpenAPI
-
-Обновить `docs/openapi3.yaml`:
-
-- переименовать API из template в Mock Generator API;
-- документировать `POST /api/v1/mock-data/generate`;
-- описать request envelope;
-- описать generation options;
-- описать relations, restricted selectors и mappings;
-- привести examples для произвольного root object и связанных collections;
-- описать response envelope;
-- описать error envelope и statuses;
-- добавить полные request/response examples;
-- сохранить технические endpoints;
-- явно указать, что поле `schema` содержит JSON Schema Draft 2020-12;
-- не пытаться полностью продублировать metaschema Draft 2020-12 внутри OpenAPI components;
-- для `schema` использовать свободный JSON object с описанием и примером.
-
-OpenAPI должен соответствовать фактическому handler contract.
-
-## 22. Наблюдаемость
-
-Минимальные metrics:
-
-```text
-mock_generation_requests_total
-mock_generation_failures_total
-mock_generation_items_total
-mock_generation_duration_seconds
-mock_generation_schema_nodes
-mock_generation_relations
-```
-
-Полезные span attributes:
-
-```text
-generation.profile
-generation.requested_count
-generation.generated_count
-schema.definition_count
-schema.node_count
-relation.count
-```
-
-Не добавлять в telemetry:
-
-- полную schema;
-- seed, если он может использоваться как пользовательский identifier;
-- generated items;
-- значения `examples`, `const`, `enum`;
-- authorization headers.
-
-## 23. Тестирование
-
-### 23.1. Unit tests
-
-Обязательные группы:
-
-- каждый primitive type;
-- `const`, `enum`, `examples`, `default` и их priority;
-- required и optional properties;
-- nullable type;
-- arrays и boundary lengths;
-- nested objects;
-- `$defs` и повторное использование `$ref`;
-- отсутствующая ссылка;
-- external `$ref`;
-- cycle detection;
-- numeric boundaries;
-- string lengths и formats;
-- поддерживаемый regex subset и каждый запрещённый regex construct;
-- `uniqueItems` success/failure budget;
-- `oneOf`;
-- relation cardinalities `1:1`, `1:N`, `N:1`, `N:N`;
-- relations между одиночными objects;
-- relations между несколькими arrays внутри object;
-- relations внутри root array;
-- несколько mappings из одного source object;
-- `single`, `random`, `round-robin`;
-- relation type mismatch, empty source, conflicts и cycles;
-- независимость relations между разными root items;
-- unsupported keywords;
-- deterministic seed;
-- different seeds;
-- context cancellation;
-- resource limits.
-
-### 23.2. Property/invariant tests
-
-Для каждой успешно сгенерированной коллекции:
-
-- количество элементов равно `count`;
-- каждый item проходит исходную скомпилированную schema;
-- одинаковые schema/options/seed/profile дают одинаковый результат;
-- generator никогда не возвращает partial success.
-
-### 23.3. HTTP contract tests
-
-Проверить:
-
-- успешный request;
-- malformed JSON;
-- отсутствующий `schema`;
-- отсутствующий `generation.count`;
-- неизвестное поле envelope;
-- неверный Content-Type;
-- body limit;
-- invalid schema;
-- unsupported schema;
-- корректный status/error code mapping;
-- generated response validation.
-
-### 23.4. Расположение Go tests
-
-Следовать Go conventions: файлы `_test.go` располагаются рядом с тестируемым package либо в существующей service-level test structure. Не создавать искусственную frontend-style папку `src/test` в Go-сервисе.
-
-## 24. Этапы реализации
-
-Рекомендуемый порядок:
-
-1. Подготовить ветку `develop`.
-2. Исправить module path и template naming.
-3. Обновить базовую документацию сервиса.
-4. Зафиксировать transport DTO и OpenAPI contract.
-5. Реализовать domain generation options/errors/profile.
-6. Реализовать application use case и ports.
-7. Подключить `jsonschema/v6` через infrastructure adapter.
-8. Реализовать capability validation V1 subset.
-9. Реализовать local `$ref` resolver и cycle detection.
-10. Реализовать parser/generator поддерживаемого regex subset.
-11. Реализовать relation selectors, mappings и dependency planning.
-12. Реализовать deterministic generator по типам и relations.
-13. Добавить post-generation validation.
-14. Реализовать HTTP handler и error mapping.
-15. Добавить configuration limits.
-16. Добавить tests.
-17. Обновить OpenAPI examples и README.
-18. Выполнить formatting, static analysis и полный `go test ./...` перед публикацией.
-
-## 25. Git workflow и Conventional Commits
-
-Все изменения выполняются в ветке:
-
-```text
-develop
-```
-
-Правила:
-
-- не коммитить реализацию напрямую в `main`;
-- перед началом работы получить актуальное состояние remote `develop`;
-- каждый commit должен быть атомарным и содержать одну логическую группу изменений;
-- не смешивать массовое форматирование, refactoring и новую функциональность в одном commit;
-- сообщения commits должны соответствовать Conventional Commits;
-- breaking change отмечается через `!` и/или footer `BREAKING CHANGE:`;
-- generated files коммитятся только если это принято текущим репозиторием;
-- secrets, `.env` с реальными значениями и credentials не коммитятся.
-
-Формат:
-
-```text
-<type>(<scope>): <short description>
-```
-
-Основные types:
-
-| Type | Назначение |
-| --- | --- |
-| `feat` | Новая функциональность |
-| `fix` | Исправление поведения |
-| `refactor` | Изменение структуры без изменения контракта |
-| `test` | Добавление или исправление tests |
-| `docs` | Документация |
-| `chore` | Техническое обслуживание |
-| `build` | Dependencies или build system |
-| `ci` | CI configuration |
-| `perf` | Производительность |
-
-Примеры:
-
-```text
-chore(service): rename template module
-feat(api): define mock generation contract
-feat(schema): add draft 2020-12 validation
-feat(generator): generate primitive values
-feat(generator): resolve local schema references
-test(generator): cover deterministic generation
-docs(api): document mock generation endpoint
-```
-
-## 26. Критерии приёмки
-
-Задача считается выполненной, когда одновременно выполнены все условия:
-
-1. Сервис собирается как `github.com/endge-lab/service-mock-generator`.
-2. В repository не осталось внутренних imports на `service-template-go`.
-3. Реализован `POST /api/v1/mock-data/generate`.
-4. Request принимает стандартную JSON Schema Draft 2020-12.
-5. Именованные types переиспользуются через `$defs` и локальный `$ref`.
-6. Внешние `$ref` запрещены и не вызывают network requests.
-7. Поддержаны все primitives и keywords, перечисленные для V1.
-8. Неподдерживаемые keywords возвращают точные diagnostics.
-9. Поддерживаемый regex subset генерирует строки, включая `^SU[0-9]{3,4}$`.
-10. Неподдерживаемые regex constructs возвращают `schema.pattern_unsupported`.
-11. Корневая schema может описывать произвольное JSON-значение, а не только array objects.
-12. Relations работают между одиночными objects, arrays и смешанными structures внутри одного root item.
-13. Relation dependency graph не зависит от порядка object properties.
-14. Сервис генерирует ровно `generation.count` items.
-15. Каждый item проходит исходную JSON Schema после применения relations.
-16. Seed обеспечивает воспроизводимый результат в рамках profile.
-17. Отсутствующий seed создаётся и возвращается клиенту.
-18. Ошибки соответствуют документированному envelope.
-19. Partial success отсутствует.
-20. Resource limits и context cancellation работают.
-21. Сервис не использует database, backend API или external schema loading.
-22. OpenAPI соответствует реализации.
-23. Unit и HTTP contract tests покрывают основные успешные и ошибочные сценарии.
-24. `go test ./...` проходит.
-25. Изменения находятся в `develop` и commits соответствуют Conventional Commits.
-
-## 27. Что явно не входит в V1
-
-- постоянное хранение schemas;
-- type registry между запросами;
-- schema IDs, revisions и migrations;
-- external или remote `$ref`;
-- рекурсивные schemas;
-- генерация regex constructs за пределами явно поддерживаемого subset V1;
-- `allOf`, `anyOf`, conditional schemas;
-- tuple generation через `prefixItems`;
-- asynchronous jobs;
-- streaming response;
-- CSV, XML, YAML или binary output;
-- business-specific faker providers;
-- произвольные relation filters, joins, expressions и cross-root relations;
-- пользовательские executable scripts;
-- UI для редактирования schema;
-- интеграция с каким-либо конкретным backend-приложением.
-
-Расширение этого списка должно выполняться отдельными задачами с явным изменением generation profile или API version.
-
-## 28. Внешние спецификации и документация
-
-Разработчик может выполнить задачу без доступа к другим исходным репозиториям. Нормативные и справочные материалы:
-
-- JSON Schema Draft 2020-12: <https://json-schema.org/draft/2020-12>
-- JSON Schema Core: <https://json-schema.org/draft/2020-12/json-schema-core>
-- JSON Schema Validation: <https://json-schema.org/draft/2020-12/json-schema-validation>
-- JSON Pointer RFC 6901: <https://www.rfc-editor.org/rfc/rfc6901>
-- RFC 3339 date/time: <https://www.rfc-editor.org/rfc/rfc3339>
-- Go JSON Schema library: <https://pkg.go.dev/github.com/santhosh-tekuri/jsonschema/v6>
-- Conventional Commits: <https://www.conventionalcommits.org/en/v1.0.0/>
+Не входят: сохранение схем между запросами, persistence сессий, replay, schema replacement активного stream, Simulation/Core/Configurator source switching, удалённый deployment.

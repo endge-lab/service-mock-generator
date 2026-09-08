@@ -1,7 +1,7 @@
 package http
 
 import (
-	domainerrors "github.com/endge-lab/service-template-go/internal/domain/errors"
+	domainerrors "github.com/endge-lab/service-mock-generator/internal/domain/errors"
 
 	"github.com/gofiber/fiber/v2"
 )

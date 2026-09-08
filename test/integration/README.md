@@ -1,8 +1,3 @@
-# Integration Tests
+# Mock Generator verification
 
-Здесь хранятся integration-тесты конкретного сервиса, которые поднимают реальные зависимости:
-
-- PostgreSQL adapters, если сервис использует БД
-- migrations, если сервис содержит бизнес-таблицы
-- transaction boundaries
-- взаимодействие infrastructure adapters <-> external systems
+See [verification strategy](../../docs/tests/README.md). The generator has no persistence/migration suite; network cases use local test doubles or the isolated harness.

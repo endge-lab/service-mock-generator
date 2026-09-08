@@ -77,7 +77,7 @@ func packageName(t *testing.T, filePath string) string {
 	return parsed.Name.Name
 }
 
-func TestTemplateRequiredPathsExist(t *testing.T) {
+func TestServiceRequiredPathsExist(t *testing.T) {
 	root := repoRoot(t)
 
 	requiredPaths := []string{
@@ -89,11 +89,9 @@ func TestTemplateRequiredPathsExist(t *testing.T) {
 		"internal/api/http/v1/docs",
 		"internal/api/http/v1/health",
 		"internal/api/http/v1/transport",
-		"internal/auth",
 		"internal/bootstrap",
 		"internal/config",
 		"internal/domain/errors",
-		"internal/middleware",
 		"internal/platform",
 		"test/contract",
 		"test/e2e",
@@ -107,60 +105,7 @@ func TestTemplateRequiredPathsExist(t *testing.T) {
 	}
 }
 
-func TestTemplateDoesNotContainReferenceBusinessLayers(t *testing.T) {
-	root := repoRoot(t)
-
-	forbiddenPaths := []string{
-		"internal/ports",
-		"internal/repo",
-		"internal/services",
-		"internal/usecase",
-		"migrations",
-	}
-
-	for _, relativePath := range forbiddenPaths {
-		if _, err := os.Stat(filepath.Join(root, relativePath)); err == nil {
-			t.Fatalf("template must not contain reference business path: %s", relativePath)
-		} else if !os.IsNotExist(err) {
-			t.Fatalf("stat %s: %v", relativePath, err)
-		}
-	}
-}
-
-func TestTemplateDoesNotContainReferenceFeature(t *testing.T) {
-	root := repoRoot(t)
-	forbiddenMarker := "to" + "do"
-
-	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
-		}
-		if entry.IsDir() {
-			switch entry.Name() {
-			case ".git", "tmp", "vendor":
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		if !strings.HasSuffix(path, ".go") && !strings.HasSuffix(path, ".md") && !strings.HasSuffix(path, ".yaml") && !strings.HasSuffix(path, ".yml") {
-			return nil
-		}
-
-		payload, readErr := os.ReadFile(path)
-		if readErr != nil {
-			return readErr
-		}
-		if strings.Contains(strings.ToLower(string(payload)), forbiddenMarker) {
-			t.Fatalf("template must not contain reference business feature text: %s", path)
-		}
-		return nil
-	})
-	if err != nil {
-		t.Fatalf("walk repo: %v", err)
-	}
-}
-
-func TestTemplateLayerPackageNames(t *testing.T) {
+func TestServiceLayerPackageNames(t *testing.T) {
 	root := repoRoot(t)
 
 	expectedPackages := map[string]string{
@@ -168,12 +113,11 @@ func TestTemplateLayerPackageNames(t *testing.T) {
 		"internal/api/http/v1/docs":      "docs",
 		"internal/api/http/v1/health":    "http",
 		"internal/api/http/v1/transport": "http",
-		"internal/auth":                  "auth",
 		"internal/bootstrap":             "bootstrap",
 		"internal/config":                "config",
 		"internal/domain/errors":         "errors",
-		"internal/middleware":            "middleware",
 		"internal/platform":              "platform",
+		"internal/platform/schema":       "schema",
 	}
 
 	for relativeDir, expectedPackage := range expectedPackages {
@@ -203,7 +147,7 @@ func TestTemplateLayerPackageNames(t *testing.T) {
 	}
 }
 
-func TestTemplateDependencyBoundaries(t *testing.T) {
+func TestServiceDependencyBoundaries(t *testing.T) {
 	root := repoRoot(t)
 
 	type dependencyRule struct {
@@ -244,22 +188,26 @@ func TestTemplateDependencyBoundaries(t *testing.T) {
 	}
 }
 
-func TestBootstrapAppDoesNotRegisterBusinessModules(t *testing.T) {
+func TestNoPersistenceOrBackendCoupling(t *testing.T) {
 	root := repoRoot(t)
-	appFile := filepath.Join(root, "internal/bootstrap/app.go")
-	payload, err := os.ReadFile(appFile)
-	if err != nil {
-		t.Fatalf("read app.go: %v", err)
+	for _, file := range listGoFiles(t, root, "internal") {
+		for _, imp := range parsedImports(t, file) {
+			for _, bad := range []string{"/service-backend/", "pgx", "database/sql", "kafka-go", "/repo/postgres"} {
+				if strings.Contains(imp, bad) {
+					t.Fatalf("forbidden dependency %s in %s", imp, file)
+				}
+			}
+		}
 	}
-
-	forbidden := []string{
-		"UseCaseModules",
-		"RepositoryModules",
-	}
-
-	for _, item := range forbidden {
-		if strings.Contains(string(payload), item) {
-			t.Fatalf("template app.go must not register %s", item)
+	for _, dir := range []string{"internal/usecase", "internal/domain"} {
+		for _, file := range listGoFiles(t, root, dir) {
+			for _, imp := range parsedImports(t, file) {
+				for _, bad := range []string{"gofiber", "google.golang.org/grpc", "/internal/platform", "/internal/api", "santhosh-tekuri"} {
+					if strings.Contains(imp, bad) {
+						t.Fatalf("forbidden application dependency %s in %s", imp, file)
+					}
+				}
+			}
 		}
 	}
 }

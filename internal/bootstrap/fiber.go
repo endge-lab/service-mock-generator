@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	servicefiber "github.com/endge-lab/service-kit-go/pkg/httpkit/fiber"
-	"github.com/endge-lab/service-template-go/internal/config"
+	"github.com/endge-lab/service-mock-generator/internal/config"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/fx"
