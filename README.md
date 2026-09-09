@@ -1,6 +1,6 @@
 # Endge Mock Generator
 
-`github.com/endge-lab/service-mock-generator`, version `0.1.0`: bounded, deterministic JSON Schema Draft 2020-12 generation and in-memory stream sessions. No database, Redis or broker is required.
+`github.com/endge-lab/service-mock-generator`, version `0.1.1`: bounded, deterministic JSON Schema Draft 2020-12 generation and in-memory stream sessions. No database, Redis or broker is required.
 
 Clients use the authenticated backend `/api/v1/mock-data` HTTP/SSE API. Only backend connects to the canonical `mockdata.v1` gRPC API. The generator's HTTP port exposes `/health`, `/version`, `/swagger` and `/swagger/openapi3.yaml` only.
 
@@ -19,7 +19,7 @@ The general `./infra/dev.sh up` includes Mock. Compose uses `service-mock-genera
 
 For a process outside Compose, copy `.env.development.example` to `.env.development`, use the local Keycloak issuer/JWKS configuration, then `make run`. `make build`, Air and Docker embed `VERSION`. Production requires service identity and TLS; only explicit `MOCK_ALLOW_INSECURE_DEVELOPMENT=true` permits disabled verification in development.
 
-The stateless configuration uses a prepared `service-kit-go` change (`postgres.enabled: false`, planned `0.5.0`). Local `go.work` uses that source. `GOWORK=off go build ./...` checks compilation against the currently published dependency; independent startup/container delivery must follow publication of the kit change and updating `go.mod`. No tag or package is published by this change.
+Stateless-конфигурация использует опубликованный `service-kit-go v0.5.0` с `postgres.enabled: false`; эта версия закреплена в `go.mod`. `GOWORK=off go build ./...` проверяет самостоятельную сборку с опубликованной зависимостью. Локальный `go.work` сохраняет связь с исходниками kit для разработки.
 
 ## Contracts
 
