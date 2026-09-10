@@ -12,13 +12,14 @@ import (
 )
 
 type node struct {
-	raw      map[string]any
-	path     string
-	ref      *node
-	props    map[string]*node
-	item     *node
-	branches []*node
-	pattern  *pattern
+	raw        map[string]any
+	path       string
+	ref        *node
+	props      map[string]*node
+	additional *node
+	item       *node
+	branches   []*node
+	pattern    *pattern
 }
 type builder struct {
 	root   map[string]any
@@ -136,17 +137,28 @@ func (b *builder) build(raw any, path string, depth int) (*node, error) {
 			n.props[k] = child
 		}
 	}
+	if ap, exists := m["additionalProperties"]; exists {
+		switch ap := ap.(type) {
+		case bool:
+		case map[string]any:
+			var err error
+			n.additional, err = b.build(ap, path+"/additionalProperties", depth+1)
+			if err != nil {
+				return nil, err
+			}
+		default:
+			return nil, invalid("schema.keyword_unsupported", path+"/additionalProperties", "Expected a boolean or object schema")
+		}
+	}
 	if req, ok := m["required"].([]any); ok {
 		for _, k := range req {
 			key, ok := k.(string)
-			if !ok || n.props[key] == nil {
+			if !ok || (n.props[key] == nil && n.additional == nil) {
 				return nil, invalid("schema.not_generatable", path, "Required property is not declared")
 			}
-		}
-	}
-	if ap, exists := m["additionalProperties"]; exists {
-		if _, ok := ap.(bool); !ok {
-			return nil, invalid("schema.keyword_unsupported", path+"/additionalProperties", "Schema-valued additionalProperties is unsupported")
+			if n.props[key] == nil {
+				n.props[key] = n.additional
+			}
 		}
 	}
 	if raw, exists := m["items"]; exists {

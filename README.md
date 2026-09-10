@@ -1,6 +1,6 @@
 # Endge Mock Generator
 
-`github.com/endge-lab/service-mock-generator`, version `0.1.1`: bounded, deterministic JSON Schema Draft 2020-12 generation and in-memory stream sessions. No database, Redis or broker is required.
+`github.com/endge-lab/service-mock-generator`, version `0.1.2`: bounded, deterministic JSON Schema Draft 2020-12 generation and in-memory stream sessions. No database, Redis or broker is required.
 
 Clients use the authenticated backend `/api/v1/mock-data` HTTP/SSE API. Only backend connects to the canonical `mockdata.v1` gRPC API. The generator's HTTP port exposes `/health`, `/version`, `/swagger` and `/swagger/openapi3.yaml` only.
 

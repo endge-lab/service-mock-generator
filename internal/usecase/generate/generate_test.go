@@ -36,6 +36,9 @@ func TestGenerationScenarios(t *testing.T) {
 		"examples": `"type":"integer","minimum":2,"examples":["invalid",3]`,
 		"default":  `"type":"integer","default":4`, "invalid-default": `"type":"integer","default":"bad"`,
 		"object":            `"type":"object","properties":{"a":{"type":"integer"},"b":{"type":"boolean"},"c":{"type":"string"}},"required":["a"],"minProperties":2,"maxProperties":2,"additionalProperties":false`,
+		"dictionary":        `"type":"object","additionalProperties":{"type":"integer","minimum":10,"maximum":20}`,
+		"nested-dictionary": `"type":"object","additionalProperties":{"type":"object","additionalProperties":{"type":"boolean"}}`,
+		"dictionary-ref":    `"$defs":{"Value":{"type":"string","format":"uuid"}},"type":"object","additionalProperties":{"$ref":"#/$defs/Value"}`,
 		"array":             `"type":"array","items":{"type":"integer"},"minItems":2,"maxItems":8`,
 		"unique":            `"type":"array","items":{"type":"integer","minimum":0,"maximum":100},"minItems":10,"maxItems":10,"uniqueItems":true`,
 		"empty-array":       `"type":"array","maxItems":0`,
@@ -81,7 +84,9 @@ func TestInvalidSchemas(t *testing.T) {
 		`"$ref":"file:///etc/passwd"`, `"$ref":"https://example.com/schema"`,
 		`"$defs":{"A":{"$ref":"#/$defs/A"}},"$ref":"#/$defs/A"`,
 		`"$ref":"#/$defs/Missing"`, `"type":["integer","string"]`,
-		`"type":"object","required":["missing"]`, `"type":"object","additionalProperties":{"type":"integer"}`,
+		`"type":"object","required":["missing"]`, `"type":"object","additionalProperties":"invalid"`,
+		`"$defs":{"A":{"type":"object","additionalProperties":{"$ref":"#/$defs/A"}}},"$ref":"#/$defs/A"`,
+		`"type":"object","additionalProperties":{"type":"integer"},"minProperties":3,"maxProperties":2`,
 		`"anyOf":[{"type":"string"}]`, `"type":"array","minItems":1000000,"items":{"type":"integer"}`,
 		`"type":"string","minLength":1000000`, `"type":"integer","maximum":1e99999`,
 		`"type":"object","properties":{"x":true}`, `"const":2,"type":"string"`,
@@ -93,6 +98,60 @@ func TestInvalidSchemas(t *testing.T) {
 				t.Fatalf("expected controlled error, got %s", r.Items)
 			}
 		})
+	}
+}
+
+// Словари соблюдают границы размера, required и не замещают явно описанные поля.
+func TestDictionaryProperties(t *testing.T) {
+	cases := []struct {
+		name, schema string
+		count        int
+	}{
+		{"default", `"type":"object","additionalProperties":{"const":7}`, 3},
+		{"empty", `"type":"object","additionalProperties":{"const":7},"maxProperties":0`, 0},
+		{"maximum", `"type":"object","additionalProperties":{"const":7},"maxProperties":1`, 1},
+		{"minimum", `"type":"object","additionalProperties":{"const":7},"minProperties":5`, 5},
+		{"required", `"type":"object","additionalProperties":{"const":7},"required":["named"]`, 1},
+		{"collision", `"type":"object","properties":{"key_1":{"const":"fixed"}},"required":["key_1"],"additionalProperties":{"const":7},"minProperties":3,"maxProperties":3`, 3},
+		{"boolean-true", `"type":"object","additionalProperties":true`, 0},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			result, err := engine().Generate(context.Background(), request(tc.schema, 1))
+			if err != nil {
+				t.Fatal(err)
+			}
+			var object map[string]any
+			if err := json.Unmarshal(result.Items[0], &object); err != nil {
+				t.Fatal(err)
+			}
+			if len(object) != tc.count {
+				t.Fatalf("expected %d properties, got %s", tc.count, result.Items[0])
+			}
+			for key, value := range object {
+				if tc.name == "collision" && key == "key_1" {
+					if value != "fixed" {
+						t.Fatal("declared property was replaced")
+					}
+				} else if value != float64(7) {
+					t.Fatalf("unexpected dictionary value: %v", value)
+				}
+			}
+			if tc.name == "required" && object["named"] != float64(7) {
+				t.Fatal("missing required dictionary key")
+			}
+		})
+	}
+}
+
+// Даже большой minProperties ограничен бюджетом до накопления результата.
+func TestDictionaryResourceBudget(t *testing.T) {
+	limits := v.DefaultLimits()
+	limits.ResultBytes = 1024
+	u := generate.NewUseCase(schema.NewCompiler(), limits)
+	result, err := u.Generate(context.Background(), request(`"type":"object","additionalProperties":{"type":"integer"},"minProperties":1000000`, 1))
+	if err == nil || len(result.Items) != 0 {
+		t.Fatal("expected bounded failure without a partial result")
 	}
 }
 func TestRelations(t *testing.T) {

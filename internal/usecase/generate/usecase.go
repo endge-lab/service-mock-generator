@@ -12,6 +12,7 @@ import (
 	"github.com/endge-lab/service-mock-generator/internal/usecase/ports"
 	"math/big"
 	prng "math/rand/v2"
+	"strconv"
 	"strings"
 	"sync/atomic"
 	"time"
@@ -350,8 +351,16 @@ func (g *generation) candidate(n *node, path []step, depth int) (any, error) {
 		if g.plan.options.OptionalPropertyProbability != nil {
 			prob = *g.plan.options.OptionalPropertyProbability
 		}
-		low, high := integer(m, "minProperties", 0), integer(m, "maxProperties", len(names))
-		if low > len(names) || low > high || len(required) > high {
+		low := integer(m, "minProperties", 0)
+		capacity := len(names)
+		if n.additional != nil {
+			capacity = max(capacity, low)
+			if len(names) == 0 {
+				capacity = max(capacity, 3)
+			}
+		}
+		high := integer(m, "maxProperties", capacity)
+		if low > capacity || low > high || len(required) > high {
 			return nil, invalid("schema.not_generatable", n.path, "Object property bounds are impossible")
 		}
 		chosen := map[string]bool{}
@@ -378,6 +387,22 @@ func (g *generation) candidate(n *node, path []step, depth int) (any, error) {
 			}
 			chosen[k] = true
 		}
+		// У словаря без именованных полей создаём до трёх ключей; min/max имеют приоритет.
+		target := low
+		if n.additional != nil && len(names) == 0 {
+			target = max(low, min(3, high))
+		}
+		for i := 1; len(chosen) < target; i++ {
+			if err := g.charge(8); err != nil {
+				return nil, err
+			}
+			key := "key_" + strconv.Itoa(i)
+			if n.props[key] != nil {
+				continue
+			}
+			chosen[key] = true
+			names = append(names, key)
+		}
 		result := map[string]any{}
 		for _, k := range names {
 			if !chosen[k] {
@@ -386,7 +411,11 @@ func (g *generation) candidate(n *node, path []step, depth int) (any, error) {
 			if err := g.charge(len(k) + 4); err != nil {
 				return nil, err
 			}
-			x, err := g.value(n.props[k], appendPath(path, step{key: k}), depth+1)
+			child := n.props[k]
+			if child == nil {
+				child = n.additional
+			}
+			x, err := g.value(child, appendPath(path, step{key: k}), depth+1)
 			if err != nil {
 				return nil, err
 			}
